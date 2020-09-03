@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "602214814455",
+    "firebase_url": "https://projeto-muh-e6ff1.firebaseio.com",
+    "project_id": "projeto-muh-e6ff1",
+    "storage_bucket": "projeto-muh-e6ff1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602214814455:android:470f87dddc03c6ba20b9f2",
+        "android_client_info": {
+          "package_name": "br.com.compmovel.projeto_muh_compmov"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602214814455-tcs412rcken1095j380cefdur9lgupgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHlDbCN9YX9a4284qzZHuBMUybjV6MrZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602214814455-tcs412rcken1095j380cefdur9lgupgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

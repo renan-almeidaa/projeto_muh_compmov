@@ -36,6 +36,7 @@ android {
         applicationId "br.com.compmovel.projeto_muh_compmov"
         minSdkVersion 16
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -52,3 +53,4 @@ android {
 flutter {
     source '../..'
 }
+apply plugin: 'com.google.gms.google-services'
