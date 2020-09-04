@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:masked_text/masked_text.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -161,26 +160,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),//data nascimento texto
                   SizedBox(height:10.0),
-               /** MaskedTextField(
-                  maskedTextFieldController: _textBirthController,
-                  mask: "xx/xx/xxxx",
-                  maxLength: 10,
-                  keyboardType: TextInputType.number,
-                  inputDecoration: new InputDecoration(
-                      border: new OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(20.0),
-                        ),
-                      ),
-                      filled: true,
-                      hintText: "Digite a data do seu nascimento",
-                      labelText: "Digite a data do seu nascimento",
-                    hintStyle: new TextStyle(color: Colors.grey[800]),
-                      fillColor: Colors.white70,
-                  ),
-
-                ),//data nascimento textfield
-                   **/
                   TextFormField(
                       inputFormatters: [maskFormatter],
                     controller: _textBirthController,
@@ -199,12 +178,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: "Data de nascimento",
                           fillColor: Colors.white70
                       )
-
-
-
                   ),
 
-                  //SizedBox(height:10.0),
+                  SizedBox(height:10.0),
                   Text(
                     'Gênero (Opcional)',
                     style: TextStyle(
