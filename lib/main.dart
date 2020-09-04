@@ -1,20 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_muh_compmov/screens/signup_screen.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'models/user_model.dart';
 
 void main() {
+
+
+
   runApp(MyApp());
 
+  //Firestore.instance.collection('tes').document('doc').setData({'nome':'guilherme'});
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatelessWidget{
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: Container(),
+  Widget build(BuildContext context){
+    return ScopedModel<UserModel>(
+        model: UserModel(),
+        child: MaterialApp(
+          title: 'Muh',
+          theme: ThemeData(
+              primarySwatch: Colors.blue,
+              primaryColor: Color.fromARGB(255, 0, 0, 0)
+          ),
+          home: SignUpScreen(),
+        )
 
     );
   }
 }
-
