@@ -153,7 +153,7 @@ class ItemRegister extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: DropDownItem(['À Venda', 'Exibição',], fontFamily),
+                    child: DropDownItem(['À venda', 'Exibição',], fontFamily),
                   ),
                 ),
                 Padding(
@@ -196,28 +196,31 @@ class ItemRegister extends StatelessWidget {
             ),
           ),
         ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        icon: Icon(Icons.add,
-          color: Colors.white,
-          // color: Colors.black,
-        ),
-        label: Text("Cadastrar Item",
-          style: TextStyle(
-            // color: Colors.black,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+        child: FloatingActionButton.extended(
+          onPressed: () {},
+          icon: Icon(Icons.add,
             color: Colors.white,
-            fontSize: 18,
-            fontFamily: fontFamily,
-            fontWeight: FontWeight.w700,
+            // color: Colors.black,
+          ),
+          label: Text("Cadastrar Item",
+            style: TextStyle(
+              // color: Colors.black,
+              color: Colors.white,
+              fontSize: 18,
+              fontFamily: fontFamily,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          // backgroundColor: Colors.white,
+          backgroundColor: Color(0xFF0077b6),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
           ),
         ),
-        // backgroundColor: Colors.white,
-        backgroundColor: Color(0xFF0077b6),
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-        ),
-      ),
+      )
     );
   }
 }
