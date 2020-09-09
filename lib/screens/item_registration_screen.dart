@@ -11,21 +11,32 @@ class ItemRegister extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      // backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF0077b6),
+        // backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
-        title: Image.asset("assets/cow.png", alignment: Alignment.center, scale: 5,),
+        title: Image.asset("assets/cow.png", alignment: Alignment.center, scale: 10,),
+        leading: RaisedButton(
+          color: Color(0xFF0077b6),
+          child: Icon(Icons.dehaze,
+            color: Colors.white,
+          ),
+          onPressed: () {},
+        ),
         actions: [
           RaisedButton(
             // color: Colors.white,
             //padding: EdgeInsets.only(0.2),
             child:
-            Icon(Icons.message),
-            color: Colors.white,
+            Icon(Icons.chat,
+              color: Colors.white,
+            ),
+            color: Color(0xFF0077b6),
             onPressed: () {
               // vai para as mensagens...
             },
@@ -70,7 +81,8 @@ class ItemRegister extends StatelessWidget {
                             child: TextField(
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white,
+                                // fillColor: Colors.white,
+                                fillColor: Color(0xFFEDFAFD),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
                                   borderSide: BorderSide.none,
@@ -113,7 +125,8 @@ class ItemRegister extends StatelessWidget {
                             ),
                           ),
                           elevation: 0,
-                          color: Colors.white,
+                          // color: Colors.white,
+                          color: Color(0xFFEDFAFD),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
                           ),
@@ -168,7 +181,8 @@ class ItemRegister extends StatelessWidget {
                         maxLines: 7,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white,
+                          // fillColor: Colors.white,
+                          fillColor: Color(0xFFEDFAFD),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
                             borderSide: BorderSide.none,
@@ -185,17 +199,20 @@ class ItemRegister extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
         icon: Icon(Icons.add,
-          color: Colors.black,
+          color: Colors.white,
+          // color: Colors.black,
         ),
         label: Text("Cadastrar Item",
           style: TextStyle(
-            color: Colors.black,
+            // color: Colors.black,
+            color: Colors.white,
             fontSize: 18,
             fontFamily: fontFamily,
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF0077b6),
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
@@ -234,7 +251,8 @@ class _DropDownItemState extends State<DropDownItem> {
         padding: EdgeInsets.all(5),
         height: 40,
         decoration: ShapeDecoration(
-          color: Colors.white,
+          // color: Colors.white,
+          color: Color(0xFFEDFAFD),
           shape: RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.all(Radius.elliptical(10, 10))
