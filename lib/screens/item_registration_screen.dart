@@ -6,10 +6,12 @@ void main() => runApp(MaterialApp(
 );
 
 class ItemRegister extends StatelessWidget {
+  final String fontFamily = 'Quicksand';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -41,9 +43,9 @@ class ItemRegister extends StatelessWidget {
                     alignment: Alignment.topCenter,
                     child: Text("Cadastrar Item",
                       style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
+                        fontSize: 25,
+                        fontFamily: fontFamily,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
@@ -56,7 +58,8 @@ class ItemRegister extends StatelessWidget {
                       Text("Nome:",
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: fontFamily,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       Flexible(
@@ -66,12 +69,15 @@ class ItemRegister extends StatelessWidget {
                             height: 40,
                             child: TextField(
                               decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
+                                  borderSide: BorderSide.none,
+                                  // borderSide: BorderSide(
+                                  //   color: Colors.black,
+                                  //   width: 0,
+                                  // ),
                                 ),
                               ),
                             ),
@@ -91,15 +97,26 @@ class ItemRegister extends StatelessWidget {
                         Text("Imagem:",
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: fontFamily,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                        OutlineButton.icon(
+                        RaisedButton.icon(
                           onPressed: () {},
                           icon: Icon(Icons.save_alt,
                             size: 20,
                           ),
-                          label: Text("Carregar"),
+                          label: Text("Carregar",
+                            style: TextStyle(
+                              fontFamily: fontFamily,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          elevation: 0,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                          ),
                         ),
                       ],
                     ),
@@ -109,21 +126,21 @@ class ItemRegister extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: DropDownItem(['Produto', 'Animal',]),
+                    child: DropDownItem(['Produto', 'Animal',], fontFamily),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: DropDownItem(['Público', 'Privado',]),
+                    child: DropDownItem(['Público', 'Privado',], fontFamily),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: DropDownItem(['À Venda', 'Exibição',]),
+                    child: DropDownItem(['À Venda', 'Exibição',], fontFamily),
                   ),
                 ),
                 Padding(
@@ -133,7 +150,8 @@ class ItemRegister extends StatelessWidget {
                     child: Text("Descrição:",
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: fontFamily,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
@@ -149,12 +167,11 @@ class ItemRegister extends StatelessWidget {
                         minLines: 7,
                         maxLines: 7,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                              width: 1.5,
-                            ),
+                            borderSide: BorderSide.none,
                           ),
                         ),
                       ),
@@ -174,6 +191,8 @@ class ItemRegister extends StatelessWidget {
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,
+            fontFamily: fontFamily,
+            fontWeight: FontWeight.w700,
           ),
         ),
         backgroundColor: Colors.white,
@@ -188,21 +207,25 @@ class ItemRegister extends StatelessWidget {
 
 class DropDownItem extends StatefulWidget {
   List<String> items;
+  String fontFamily;
 
-  DropDownItem(List<String> items) {
+  DropDownItem(List<String> items, String fontFamily) {
     this.items = items;
+    this.fontFamily = fontFamily;
   }
 
   @override
-  _DropDownItemState createState() => _DropDownItemState(items[0]);
+  _DropDownItemState createState() => _DropDownItemState(items[0], fontFamily);
 
 }
 
 class _DropDownItemState extends State<DropDownItem> {
   String dropdownValue;
+  String fontFamily;
 
-  _DropDownItemState(String dropdownValue) {
+  _DropDownItemState(String dropdownValue, String fontFamily) {
     this.dropdownValue = dropdownValue;
+    this.fontFamily = fontFamily;
   }
 
   @override
@@ -211,11 +234,9 @@ class _DropDownItemState extends State<DropDownItem> {
         padding: EdgeInsets.all(5),
         height: 40,
         decoration: ShapeDecoration(
+          color: Colors.white,
           shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1.5,
-                style: BorderStyle.solid,
-              ),
+              side: BorderSide.none,
               borderRadius: BorderRadius.all(Radius.elliptical(10, 10))
           ),
         ),
@@ -242,6 +263,8 @@ class _DropDownItemState extends State<DropDownItem> {
                   child: Text(value,
                     style: TextStyle(
                       fontSize: 20,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 );
