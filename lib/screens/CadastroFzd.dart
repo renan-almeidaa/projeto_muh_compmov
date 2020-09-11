@@ -14,7 +14,7 @@ class _CadastroFzdState extends State<CadastroFzd> {
   //para o dropDown
 List<String> _productions = ['Leite', 'hortaliças'];
 String _productionSel;
-
+final _nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +79,7 @@ String _productionSel;
                    Padding(
                     padding: EdgeInsets.only(top: 5, bottom: 5),
                     child: TextFormField(
+                      controller: _nameController,
                       validator: (text){
                         if(text.isEmpty)return "Campo obrigatório";
                       },
