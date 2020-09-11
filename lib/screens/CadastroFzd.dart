@@ -22,7 +22,7 @@ String _productionSel;
       backgroundColor: Colors.white,
       iconTheme: new IconThemeData(color: Colors.black),
       //  leading: Image.asset("imagens/cow.png"),
-      title: Image.asset("images/cow.jpg", alignment: Alignment.center, scale: 1.5, width: 50, height: 50,),
+      title: Image.asset("images/cow.png", alignment: Alignment.center, scale: 1.5, width: 50, height: 50,),
       actions: [
        RaisedButton(
         // color: Colors.white,
@@ -78,7 +78,10 @@ String _productionSel;
                    ),
                    Padding(
                     padding: EdgeInsets.only(top: 5, bottom: 5),
-                    child: TextField(
+                    child: TextFormField(
+                      validator: (text){
+                        if(text.isEmpty)return "Campo obrigatório";
+                      },
                       style: TextStyle(
                         fontSize: 17,
                       ),
