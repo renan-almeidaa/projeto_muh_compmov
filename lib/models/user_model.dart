@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -75,6 +78,27 @@ class UserModel extends Model{
   Future<Null> _saveUserData(Map<String,dynamic> userData) async {
     this.userData = userData;
     await Firestore.instance.collection('users').document(firebaseUser.uid).setData(userData);
+  }
+
+   Future<String> _updateImage(File image) async {
+    if (image != null) {
+      StorageUploadTask task = FirebaseStorage.instance.ref().child(
+          DateTime
+              .now()
+              .millisecondsSinceEpoch
+              .toString()
+      ).putFile(image);
+      StorageTaskSnapshot taskSnapshot = await task.onComplete;
+      String url = await taskSnapshot.ref.getDownloadURL();
+      return url;
+    }
+    return "";
+  }
+
+  Future<Null> createFarmData(Map<String,dynamic> farmData, File image) async {
+    String url = await _updateImage(image);
+    farmData.update('image', (value) => value = url);
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document().setData(farmData);
   }
 
   bool isLoggedIn(){

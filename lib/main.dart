@@ -11,7 +11,6 @@ import 'models/user_model.dart';
 void main() {
 
 
-
   runApp(MyApp());
 
 
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget{
               primarySwatch: Colors.blue,
               primaryColor: Color.fromARGB(255, 0, 0, 0)
           ),
-          home: ItemRegister(),
+          home: LoginScreen(),
         )
 
     );
