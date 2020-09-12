@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -80,6 +81,11 @@ class _CustomFormState extends State<CustomForm> {
   Map<String,String> _dropdownMenus = Map<String,String>();
 
   File _image;
+  String _filename = '';
+
+  String getFileName(File file) {
+    return basename(file.path);
+  }
 
   pickImageFromGallery(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
@@ -143,11 +149,13 @@ class _CustomFormState extends State<CustomForm> {
                                       },
                                       decoration: InputDecoration(
                                         filled: true,
-                                        // fillColor: Colors.white,
-                                        fillColor: Color(0xFFF4F5F6),
+                                        fillColor: Colors.white,
+                                        // fillColor: Color(0xFFF4F5F6),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-                                          borderSide: BorderSide.none,
+                                          borderSide: BorderSide(
+                                            width: 1,
+                                          ),
                                           // borderSide: BorderSide(
                                           //   color: Colors.black,
                                           //   width: 0,
@@ -174,9 +182,33 @@ class _CustomFormState extends State<CustomForm> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                child: Container(
+                                  child: Text(_filename,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                             RaisedButton.icon(
-                              onPressed: () {
-                                pickImageFromGallery(ImageSource.gallery);
+                              onPressed: () async {
+                                await pickImageFromGallery(ImageSource.gallery);
+
+                                setState(() {
+                                  _filename = getFileName(_image);
+                                });
+
+                                final snackBar = SnackBar(
+                                  content: Text('Imagem carregada!'),
+                                  backgroundColor: Colors.blue,
+                                );
+
+                                Scaffold.of(context).showSnackBar(snackBar);
                               },
                               icon: Icon(Icons.save_alt,
                                 size: 20,
@@ -187,10 +219,11 @@ class _CustomFormState extends State<CustomForm> {
                                 ),
                               ),
                               elevation: 0,
-                              // color: Colors.white,
-                              color: Color(0xFFF4F5F6),
+                              color: Colors.white,
+                              // color: Color(0xFFF4F5F6),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                side: BorderSide(),
                               ),
                             ),
                           ],
@@ -243,11 +276,11 @@ class _CustomFormState extends State<CustomForm> {
                               maxLines: 6,
                               decoration: InputDecoration(
                                 filled: true,
-                                // fillColor: Colors.white,
-                                fillColor: Color(0xFFF4F5F6),
+                                fillColor: Colors.white,
+                                // fillColor: Color(0xFFF4F5F6),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-                                  borderSide: BorderSide.none,
+                                  borderSide: BorderSide(),
                                 ),
                               ),
                             ),
@@ -261,7 +294,7 @@ class _CustomFormState extends State<CustomForm> {
                         child: RaisedButton.icon(
                           color: Colors.black,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                           elevation: 0,
                           icon: Icon(Icons.add,
@@ -285,6 +318,20 @@ class _CustomFormState extends State<CustomForm> {
                               };
                               // debugPrint(itemData.toString());
                               model.createItemData(itemData, _image, widget._farmId);
+
+                              final snackBar = SnackBar(
+                                content: Text('Item cadastrado!'),
+                                backgroundColor: Colors.green,
+                              );
+
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            } else {
+                              final snackBar = SnackBar(
+                                content: Text('Dados incompletos'),
+                                backgroundColor: Colors.red,
+                              );
+
+                              Scaffold.of(context).showSnackBar(snackBar);
                             }
                           },
                         ),
@@ -332,12 +379,14 @@ class _DropDownItemState extends State<DropDownItem> {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(10),
-        height: 40,
+        height: 42,
         decoration: ShapeDecoration(
-          // color: Colors.white,
-          color: Color(0xFFF4F5F6),
+          color: Colors.white,
+          // color: Color(0xFFF4F5F6),
           shape: RoundedRectangleBorder(
-              side: BorderSide.none,
+              side: BorderSide(
+                width: 1,
+              ),
               borderRadius: BorderRadius.all(Radius.elliptical(10, 10))
           ),
         ),
