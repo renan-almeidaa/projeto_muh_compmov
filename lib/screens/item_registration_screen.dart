@@ -184,12 +184,12 @@ class _CustomFormState extends State<CustomForm> {
                             ),
                             Flexible(
                               child: Padding(
-                                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                                 child: Container(
                                   child: Text(_filename,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 15,
                                     ),
                                   ),
                                 ),
