@@ -101,6 +101,12 @@ class UserModel extends Model{
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document().setData(farmData);
   }
 
+  Future<Null> createItemData(Map<String,dynamic> itemData, File image, String farmId) async {
+    String url = await _updateImage(image);
+    itemData.update('image', (value) => value = url);
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(farmId).collection('items').document().setData(itemData);
+  }
+
   bool isLoggedIn(){
     return firebaseUser != null;
   }
