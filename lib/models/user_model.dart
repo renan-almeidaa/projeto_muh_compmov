@@ -46,6 +46,7 @@ class UserModel extends Model{
     });
   }
 
+
   void signIn({@required String email,@required String pass,
     @required VoidCallback onSuccess,@required VoidCallback onFail})async{
     isLoading = true;
@@ -101,6 +102,8 @@ class UserModel extends Model{
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document().setData(farmData);
   }
 
+
+
   Future<Null> createItemData(Map<String,dynamic> itemData, File image, String farmId) async {
     String url = await _updateImage(image);
     itemData.update('image', (value) => value = url);
@@ -128,5 +131,17 @@ class UserModel extends Model{
       }
     }
     notifyListeners();
+  }
+
+
+
+  Future<Null> criarTipo(String idFarm, Map<String,dynamic> idtag,  File image) async {
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(idFarm).collection("products").document().setData(idtag);
+  }
+
+  Future<String> pegaNomedeumaFazenda( String idFarm) async{ // retorna os itens da fazenda da tela do gu
+    DocumentSnapshot fazenda = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(idFarm).get();
+    String nome = fazenda.data['name'];
+    return nome;
   }
 }

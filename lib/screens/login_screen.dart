@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/CadastroFzd.dart';
+import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
 import 'package:projeto_muh_compmov/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -224,10 +225,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onSuccess(){
+    print('Deu certo chegou aqui');
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context)=>ItemRegister('AX9hCVmkDEHHsTtgFzl3'))
+        MaterialPageRoute(builder: (context)=>FazendaSelecionadaScreen(
+            'AX9hCVmkDEHHsTtgFzl3'
+        ))
     );
-  }
+}
   void _onFail(){
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(content: Text("Falha ao Entrar"),

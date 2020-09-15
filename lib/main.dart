@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget{
               primarySwatch: Colors.blue,
               primaryColor: Color.fromARGB(255, 0, 0, 0)
           ),
-          home: FazendaSelecionadaScreen(),
+          home: LoginScreen(),
         )
 
     );
