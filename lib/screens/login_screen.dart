@@ -137,20 +137,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: FlatButton(
                           onPressed: (){
                             if(_emailController.text.isEmpty){
-                              _scaffoldKey.currentState.showSnackBar(
-                                SnackBar(content: Text("Insira seu email para redefinir a senha"),
-                                  backgroundColor: Colors.redAccent,
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
+                             ColoqueEmail();
                             }else{
                               model.recoverPass(_emailController.text);
-                              _scaffoldKey.currentState.showSnackBar(
-                                SnackBar(content: Text("Confira seu email"),
-                                  backgroundColor: Theme.of(context).primaryColor,
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
+                              ConfiraEmail();
                             }
                           },
                           child: Text('Esqueci minha senha',
@@ -223,6 +213,46 @@ class _LoginScreenState extends State<LoginScreen> {
       )
     );
   }
+
+  void ConfiraEmail(){
+    AlertDialog alert = AlertDialog(
+      title: Text("Aviso"),
+      content: Text("Confira o seu email!"),
+      actions: [
+        FlatButton(
+          child: Text('OK'),
+          onPressed: () => Navigator.pop(context),
+        )
+      ],
+    );
+    //exibe o diálogo
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+  void ColoqueEmail(){
+    AlertDialog alert = AlertDialog(
+      title: Text("Aviso!"),
+      content: Text("Coloque o seu email no campo E-mail!"),
+      actions: [
+        FlatButton(
+          child: Text('OK'),
+          onPressed: () => Navigator.pop(context),
+        )
+      ],
+    );
+    //exibe o diálogo
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
 
   void _onSuccess(){
     print('Deu certo chegou aqui');

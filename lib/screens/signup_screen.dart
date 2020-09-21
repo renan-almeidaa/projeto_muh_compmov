@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:masked_text/masked_text.dart';
@@ -54,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         title: Text('Criar Conta',
         style: TextStyle(
-          fontSize: 25.0
+          fontSize: 20.0
         ),
         ),
         centerTitle: true,
@@ -286,6 +287,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           genero ='';
                         }
                         if(_formKey.currentState.validate()){
+
                           Map<String,dynamic> userData = {
                             'name': _nameController.text,
                             'lastname':_middleNameController.text,
@@ -300,6 +302,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onSuccess: _onSuccess,
                             onFail: _onFail
                           );
+
+
                         }
                       },
                     ) ,
@@ -312,6 +316,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+
+  void _onSuccess(){
+    AlertDialog alert = AlertDialog(
+      title: Text("Parabéns!"),
+      content: Text("Conta criada com sucesso!"),
+      actions: [
+        FlatButton(
+          child: Text('OK'),
+          onPressed: (){},
+        )
+      ],
+    );
+    //exibe o diálogo
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+  /**
   void _onSuccess(){
     _scaffoldKey.currentState.showSnackBar(
         SnackBar(content: Text("Usuario criado com sucesso!"),
@@ -323,12 +349,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
      // Navigator.of(context).pop();
     //});
   }
+
   void _onFail(){
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(content: Text("Falha ao criar usuário"),
         backgroundColor: Colors.redAccent,
         duration: Duration(seconds: 2),
       ),
+    );
+  }
+   **/
+
+  void _onFail(){
+    AlertDialog alert = AlertDialog(
+      title: Text("Erro"),
+      content: Text("Falha ao criar ao conta"),
+      actions: [
+        FlatButton(
+          child: Text('OK'),
+          onPressed: () => Navigator.pop(context),
+        )
+      ],
+    );
+    //exibe o diálogo
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+      return alert;
+    },
     );
   }
 
