@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/CadastroFzd.dart';
+import 'package:projeto_muh_compmov/screens/TelaPrincipalEntrada.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
 import 'package:projeto_muh_compmov/screens/signup_screen.dart';
@@ -12,7 +13,7 @@ _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
+  List name;
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
 
@@ -176,6 +177,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: (){
                             if(_formKey.currentState.validate()){
                               model.SignOut();
+                              model.pegaNomedeumaFazenda();
+                              this.name = model.nome;
                               model.signIn(
                                   email: _emailController.text,
                                   pass: _passController.text,
@@ -257,9 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _onSuccess(){
     print('Deu certo chegou aqui');
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context)=>FazendaSelecionadaScreen(
-            'AX9hCVmkDEHHsTtgFzl3'
-        ))
+        MaterialPageRoute(builder: (context) => TelaPrincipal(this.name)),
     );
 }
   void _onFail(){

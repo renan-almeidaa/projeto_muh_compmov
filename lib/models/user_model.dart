@@ -4,12 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_muh_compmov/firebase/Fazenda.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model{
 
   FirebaseAuth _auth = FirebaseAuth.instance;
-
+  List nome = [];
+  String idFazenda;
   FirebaseUser firebaseUser;
   Map<String,dynamic> userData = Map();
 
@@ -46,7 +48,6 @@ class UserModel extends Model{
     });
   }
 
-
   void signIn({@required String email,@required String pass,
     @required VoidCallback onSuccess,@required VoidCallback onFail})async{
     isLoading = true;
@@ -81,7 +82,7 @@ class UserModel extends Model{
     await Firestore.instance.collection('users').document(firebaseUser.uid).setData(userData);
   }
 
-   Future<String> _updateImage(File image) async {
+  Future<String> _updateImage(File image) async {
     if (image != null) {
       StorageUploadTask task = FirebaseStorage.instance.ref().child(
           DateTime
@@ -96,18 +97,51 @@ class UserModel extends Model{
     return "";
   }
 
+  Future<Null> createProdutoData(Map<String,dynamic> farmData, String idFarm) async {
+    // String url = await _updateImage(image);
+    //farmData.update('image', (value) => value = url);
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(idFarm).collection("products").document().setData(farmData);
+  }
+
   Future<Null> createFarmData(Map<String,dynamic> farmData, File image) async {
     String url = await _updateImage(image);
     farmData.update('image', (value) => value = url);
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document().setData(farmData);
   }
 
+  Future<String> pegaItensdeumaFazenda() async{ // retorna os itens da fazenda da tela do gu
+    DocumentSnapshot fazenda = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document().get();
+    String nome = fazenda.data['name'];
+    return nome;
+  }
 
+  Future<Null> criarTipo(String idFarm, Map<String,dynamic> idtag,  File image) async {
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(idFarm).collection("products").document().setData(idtag);
+  }
+
+  Future<Null> criaProduto(Map<String, dynamic> produtos, File image, String id_fazenda) async {
+    String url = await _updateImage(image);
+    produtos.update('image', (value) => value = url);
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(id_fazenda).collection('products').document().setData(produtos);
+  }
+
+  Future<List> pegaNomedeumaFazenda() async{ // retorna os itens da fazenda da tela do gu
+    QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').getDocuments();
+    for(DocumentSnapshot item in query.documents) {
+      var dados = item.data;
+      print("nome12121212121: " + dados["name"]);
+      String aux = dados["name"];
+      nome.add(aux);
+      print("\n\n\n\n\n dados: " + item.documentID);
+      idFazenda = item.documentID;
+    }
+  }
 
   Future<Null> createItemData(Map<String,dynamic> itemData, File image, String farmId) async {
     String url = await _updateImage(image);
     itemData.update('image', (value) => value = url);
-    await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(farmId).collection('items').document().setData(itemData);
+    //await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(farmId).collection('items').document().setData(itemData)
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection('items').document().setData(itemData);
   }
 
   bool isLoggedIn(){
@@ -131,17 +165,5 @@ class UserModel extends Model{
       }
     }
     notifyListeners();
-  }
-
-
-
-  Future<Null> criarTipo(String idFarm, Map<String,dynamic> idtag,  File image) async {
-    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(idFarm).collection("products").document().setData(idtag);
-  }
-
-  Future<String> pegaNomedeumaFazenda( String idFarm) async{ // retorna os itens da fazenda da tela do gu
-    DocumentSnapshot fazenda = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(idFarm).get();
-    String nome = fazenda.data['name'];
-    return nome;
   }
 }

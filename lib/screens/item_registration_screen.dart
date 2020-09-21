@@ -16,7 +16,7 @@ import 'package:scoped_model/scoped_model.dart';
 class ItemRegister extends StatelessWidget {
   String _farmId;
 
-  ItemRegister(String farmId) {
+  ItemRegister(String farmId, String nomefazenda) {
     this._farmId = farmId;
   }
 
