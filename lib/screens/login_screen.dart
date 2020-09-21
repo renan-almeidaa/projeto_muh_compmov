@@ -53,18 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 10.0,),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'E-mail',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      SizedBox(height: 10.0,),
+
                       TextFormField(
                           controller: _emailController,
                           validator: (text){
@@ -82,18 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               fillColor: Colors.white70
                           )
                       ),
-                      SizedBox(height: 10.0,),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Senha',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
+
+
                       SizedBox(height: 10.0,),
                       TextFormField(
                           obscureText: true,
