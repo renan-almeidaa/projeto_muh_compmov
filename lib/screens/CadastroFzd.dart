@@ -1,28 +1,82 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-void main() {}
+// void main() => runApp(MaterialApp(
+//   home: ItemRegister('teste'),
+//   ),
+// );
 
-class CadastroFzd extends StatefulWidget {
+class CadastroFzd extends StatelessWidget {
+
   @override
-  _CadastroFzdState createState() => _CadastroFzdState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0.5,
+        centerTitle: true,
+        // backgroundColor: Color(0xFF121416),
+        backgroundColor: Colors.white,
+        iconTheme: new IconThemeData(color: Colors.black),
+        //  leading: Image.asset("imagens/cow.png"),
+        title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
+        leading: RaisedButton(
+          // color: Color(0xFF121416),
+          color: Colors.white,
+          child: Icon(Icons.dehaze,
+            color: Colors.black,
+          ),
+          onPressed: () {},
+        ),
+        actions: [
+          RaisedButton(
+            // color: Colors.white,
+            //padding: EdgeInsets.only(0.2),
+            child:
+            Icon(Icons.chat,
+              color: Colors.black,
+            ),
+            // color: Color(0xFF121416),
+            color: Colors.white,
+            onPressed: () {
+              // vai para as mensagens...
+            },
+          ),
+        ],
+      ),
+      body: CustomForm(),
+    );
+  }
 }
 
-class _CadastroFzdState extends State<CadastroFzd> {
-  //para o dropDown
-  List<String> _productions = ['Leite', 'hortaliças'];
-  String _productionSel;
+// -- FORM
+class CustomForm extends StatefulWidget {
+
+  @override
+  _CustomFormState createState() => _CustomFormState();
+}
+
+class _CustomFormState extends State<CustomForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _adressController = TextEditingController();
-  final TextEditingController _descriptionController =  TextEditingController();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-  String _mensagemErro = "";
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _productionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   File _image;
+  String _filename = '';
+
+  String getFileName(File file) {
+    return basename(file.path);
+  }
 
   pickImageFromGallery(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
@@ -33,330 +87,320 @@ class _CadastroFzdState extends State<CadastroFzd> {
     });
   }
 
-  _validarCampos() {
-    //Recupera dados dos campos
-    String nome = _nameController.text;
-    String endereco = _adressController.text;
-
-    List<String> producoes = _productions;
-    String produtoSelecionado = _productionSel;
-    if (nome.isNotEmpty) {
-      if (endereco.isNotEmpty) {
-        if (producoes.contains(produtoSelecionado)) {
-          setState(() {
-            _mensagemErro = "";
-          });
-        } else {
-          setState(() {
-            _mensagemErro = "Selecione o produto primário da sua fazenda!";
-          });
-        }
-      } else {
-        setState(() {
-          _mensagemErro = "Preencha o endereço";
-        });
-      }
-    } else {
-      setState(() {
-        _mensagemErro = "Preencha o nome";
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: Color(0xFF121416),
-          // backgroundColor: Colors.black87,
-          iconTheme: new IconThemeData(color: Colors.black),
-          //  leading: Image.asset("imagens/cow.png"),
-          title: Image.asset(
-            "assets/cow.png",
-            alignment: Alignment.center,
-            scale: 10,
-          ),
-          leading: RaisedButton(
-            color: Color(0xFF121416),
-            // color: Colors.black12,
-            child: Icon(
-              Icons.dehaze,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-          actions: [
-            RaisedButton(
-              // color: Colors.white,
-              //padding: EdgeInsets.only(0.2),
-              child: Icon(
-                Icons.chat,
-                color: Colors.white,
-              ),
-              color: Color(0xFF121416),
-              // color: Colors.black12,
-              onPressed: () {
-                // vai para as mensagens...
-              },
-            ),
-          ],
-        ),
-        body: ScopedModelDescendant<UserModel>(
-          builder: (context, child, model) {
-            if (model.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return Container(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 25, bottom: 20),
-                        child: Text(
-                          "Cadastro fazenda",
+    return ScopedModelDescendant<UserModel>(
+      builder: (context, child, model) {
+        if(model.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        else {
+          return Form(
+            key: _formKey,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Text("Cadastrar Fazenda",
                           style: TextStyle(
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              decoration: TextDecoration.none),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Nome da fazenda:",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: TextFormField(
-                                    controller: _nameController,
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                    ),
-                                    keyboardType: TextInputType.name,
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                        hintText: "Digite um nome",
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15))),
-                                  ),
-                                ),
-                              ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Nome:",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Endereço:",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: TextField(
-                                    controller: _adressController,
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                    ),
-                                    keyboardType: TextInputType.streetAddress,
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                        hintText: "Digite o endereço",
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15))),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "Produção primária:",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 20),
-                                  child: new Center(
-                                    child: DropdownButton(
-                                      icon: Icon(Icons.arrow_downward),
-                                      iconSize: 20,
-                                      elevation: 20,
-                                      style: TextStyle(color: Colors.black),
-
-                                      hint: Text(
-                                          'Selecione um tipo...'), // Not necessary for Option 1
-                                      value: _productionSel,
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          _productionSel = newValue;
-                                        });
+                          ),
+                          Flexible(
+                              child: Padding(
+                                  padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+                                  child: Container(
+                                    height: 40,
+                                    child: TextFormField(
+                                      controller: _nameController,
+                                      validator: (field) {
+                                        if (field.length == 0) return "Dê um nome para sua fazenda!";
+                                        return null;
                                       },
-                                      items: _productions.map((location) {
-                                        return DropdownMenuItem(
-                                          child: new Text(location),
-                                          value: location,
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Imagem:",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    RaisedButton.icon(
-                                      onPressed: () {
-                                        pickImageFromGallery(
-                                            ImageSource.gallery);
-                                      },
-                                      icon: Icon(
-                                        Icons.save_alt,
-                                        size: 20,
-                                      ),
-                                      label: Text(
-                                        "Carregar",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        // fillColor: Color(0xFFF4F5F6),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                          borderSide: BorderSide(
+                                            width: 1,
+                                          ),
+                                          // borderSide: BorderSide(
+                                          //   color: Colors.black,
+                                          //   width: 0,
+                                          // ),
                                         ),
                                       ),
-                                      elevation: 0,
-                                      // color: Colors.white,
-                                      color: Color(0xFFF4F5F6),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.elliptical(10, 10)),
+                                    ),
+                                  )
+                              )
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Endereço:",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Flexible(
+                              child: Padding(
+                                  padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+                                  child: Container(
+                                    height: 40,
+                                    child: TextFormField(
+                                      controller: _adressController,
+                                      validator: (field) {
+                                        if (field.length == 0) return "Informe o endereço!";
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        // fillColor: Color(0xFFF4F5F6),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                          borderSide: BorderSide(
+                                            width: 1,
+                                          ),
+                                          // borderSide: BorderSide(
+                                          //   color: Colors.black,
+                                          //   width: 0,
+                                          // ),
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  )
+                              )
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Produção primária:",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Flexible(
+                              child: Padding(
+                                  padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+                                  child: Container(
+                                    height: 40,
+                                    child: TextFormField(
+                                      controller: _productionController,
+                                      validator: (field) {
+                                        if (field.length == 0) return "Informe a produção primária!";
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        // fillColor: Color(0xFFF4F5F6),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                          borderSide: BorderSide(
+                                            width: 1,
+                                          ),
+                                          // borderSide: BorderSide(
+                                          //   color: Colors.black,
+                                          //   width: 0,
+                                          // ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              )
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Imagem:",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
+                            Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                  child: _image == null
+                                      ? Container()
+                                           : Image.file(_image),
+                              ),
+                            ),
+                            RaisedButton.icon(
+                              onPressed: () async {
+                                await pickImageFromGallery(ImageSource.gallery);
 
-                            //dropdown
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Descrição:",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                setState(() {
+                                  _filename = getFileName(_image);
+                                });
+
+                                final snackBar = SnackBar(
+                                  content: Text('Imagem carregada!'),
+                                  backgroundColor: Colors.blue,
+                                );
+
+                                Scaffold.of(context).showSnackBar(snackBar);
+                              },
+                              icon: Icon(Icons.save_alt,
+                                size: 20,
+                              ),
+                              label: Text("Carregar",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Container(
-                                    child: TextField(
-                                      controller: _descriptionController,
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                      ),
-                                      keyboardType: TextInputType.multiline,
-                                      minLines: 3,
-                                      maxLines: 3,
-                                      decoration: InputDecoration(
-                                          filled: true,
-                                          hintText:
-                                              "Faça uma descrição da fazenda",
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15))),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
+                              elevation: 0,
+                              color: Colors.white,
+                              // color: Color(0xFFF4F5F6),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                side: BorderSide(),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Align(
-                          child: RaisedButton(
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius:
-                                      new BorderRadius.circular(30.0)),
-                              color: Colors.black,
-                              onPressed: () {
-                                _validarCampos();
-                                if (_mensagemErro != "")
-                                  _scaffoldKey.currentState.showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        _mensagemErro,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                      ),
-                                      backgroundColor: Colors.redAccent,
-                                      duration: Duration(seconds: 2),
-                                    ),
-                                  );
-                                else {
-                                  Map<String,dynamic> farmData = {
-                                    'name': _nameController.text,
-                                    'address': _adressController.text,
-                                    'productionPrimary': _productionSel,
-                                    'description': _descriptionController.text,
-                                    'image': ""
-                                  };
-                                  model.createFarmData(farmData, _image);
-                                }
-                              },
-                              child: Text(
-                                "Cadastrar fazenda",
-                                style: TextStyle(
-                                  fontSize: 35,
-                                  color: Colors.white,
-                                  decoration: TextDecoration.none,
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text("Descrição:",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            height: 150,
+                            child: TextFormField(
+                              controller: _descriptionController,
+                              keyboardType: TextInputType.multiline,
+                              minLines: 6,
+                              maxLines: 6,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                // fillColor: Color(0xFFF4F5F6),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                  borderSide: BorderSide(),
                                 ),
-                              ))),
-                    ],
-                  ),
+                              ),
+                            ),
+                          )
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: RaisedButton.icon(
+                          color: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          elevation: 0,
+                          icon: Icon(Icons.add,
+                            color: Colors.white,
+                          ),
+                          label: Text('Cadastrar Fazenda',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          onPressed: () {
+                            if(_formKey.currentState.validate()) {
+                              Map<String,dynamic> farmData = {
+                                'name': _nameController.text,
+                                'address': _adressController.text,
+                                'productionPrimary': _productionController,
+                                'description': _descriptionController.text,
+                                'image': ""
+                              };
+                              model.createFarmData(farmData, _image);
+
+                              final snackBar = SnackBar(
+                                content: Text('Fazenda cadastrada!'),
+                                backgroundColor: Colors.green,
+                              );
+
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            } else {
+                              final snackBar = SnackBar(
+                                content: Text('Dados incompletos'),
+                                backgroundColor: Colors.red,
+                              );
+
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            }
+                          },
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              );
-            }
-          },
-        ));
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 }
+
