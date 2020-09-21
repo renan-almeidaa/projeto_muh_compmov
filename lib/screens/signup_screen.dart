@@ -151,15 +151,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: "Senha",
                           fillColor: Colors.white70)
                   ),//senha
-                  SizedBox(height:10.0),
-                  Text(
 
-                    'Data de nascimento',
-                    style: TextStyle(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),//data nascimento texto
+
                   SizedBox(height:10.0),
                   TextFormField(
                       inputFormatters: [maskFormatter],
@@ -185,7 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     'Gênero (Opcional)',
                     style: TextStyle(
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold
                     ),
                   ),//texto genero
