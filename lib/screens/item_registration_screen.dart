@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -15,9 +16,12 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ItemRegister extends StatelessWidget {
   String _farmId;
+  String _nomefazenda;
+  List _nomes = new List();
 
   ItemRegister(String farmId, String nomefazenda) {
     this._farmId = farmId;
+    this._nomefazenda = nomefazenda;
   }
 
   @override
@@ -57,7 +61,8 @@ class ItemRegister extends StatelessWidget {
           ),
         ],
       ),
-      body: CustomForm(this._farmId),
+      body: CustomForm(this._farmId, this._nomes),
+      drawer: CustomDrawer(this._nomes),
     );
   }
 }
@@ -65,9 +70,11 @@ class ItemRegister extends StatelessWidget {
 // -- FORM
 class CustomForm extends StatefulWidget {
   String _farmId;
+  List _nomes;
 
-  CustomForm(String farmId) {
+  CustomForm(String farmId, List nomes) {
     this._farmId = farmId;
+    this._nomes = nomes;
   }
 
   @override
@@ -106,6 +113,7 @@ class _CustomFormState extends State<CustomForm> {
           );
         }
         else {
+          this.widget._nomes.addAll(model.nome);
           return Form(
             key: _formKey,
             child: Container(
