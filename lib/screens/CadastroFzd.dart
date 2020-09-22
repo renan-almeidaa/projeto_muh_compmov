@@ -16,7 +16,7 @@ class CadastroFzd extends StatefulWidget {
 }
 
 class _CustomFormState extends State<CadastroFzd> {
-  List name;
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _adressController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -57,15 +57,6 @@ class _CustomFormState extends State<CadastroFzd> {
             alignment: Alignment.center,
             scale: 3.5,
           ),
-          leading: RaisedButton(
-            // color: Color(0xFF121416),
-            color: Colors.white,
-            child: Icon(
-              Icons.dehaze,
-              color: Colors.black,
-            ),
-            onPressed: () {},
-          ),
           actions: [
             RaisedButton(
               // color: Colors.white,
@@ -90,7 +81,7 @@ class _CustomFormState extends State<CadastroFzd> {
                 child: CircularProgressIndicator(),
               );
             } else {
-              return Form(
+              return Container(
                 key: _formKey,
                 child: Container(
                   padding: EdgeInsets.all(10),
@@ -370,7 +361,6 @@ class _CustomFormState extends State<CadastroFzd> {
                                 ),
                               ),
                               onPressed: () {
-                                name = model.nome;
                                 if (_formKey.currentState.validate()) {
                                   Map<String, dynamic> farmData = {
                                     'name': _nameController.text,
@@ -406,7 +396,6 @@ class _CustomFormState extends State<CadastroFzd> {
               );
             }
           },
-
         ),
         drawer: CustomDrawer(name),
     );
