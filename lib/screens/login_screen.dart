@@ -78,8 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               filled: true,
-                              hintStyle: new TextStyle(color: Colors.grey[800]),
-                              hintText: "E-mail",
+
                               fillColor: Colors.white70
                           )
                       ),
@@ -109,8 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               filled: true,
-                              hintStyle: new TextStyle(color: Colors.grey[800]),
-                              hintText: "Senha",
+
                               fillColor: Colors.white70
                           )
                       ),
