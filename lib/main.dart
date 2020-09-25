@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_muh_compmov/screens/CadastroFzd.dart';
+import 'package:projeto_muh_compmov/screens/TelaPrincipalEntrada.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
 import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget{
               primarySwatch: Colors.blue,
               primaryColor: Color.fromARGB(255, 0, 0, 0)
           ),
-          home: CadastroFzd(),
+          home: LoginScreen(),
         )
 
     );

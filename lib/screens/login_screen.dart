@@ -256,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   void _onSuccess(){
-    print('Deu certo chegou aqui');
+    print('Deu certo chegou');
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => TelaPrincipal(this.name)),
     );
