@@ -325,7 +325,7 @@ class _CustomFormState extends State<CustomForm> {
                                 'description':_descController.text,
                               };
                               // debugPrint(itemData.toString());
-                              model.createItemData(itemData, _image, widget._farmId);
+                              //model.createItemData(itemData, _image, widget._farmId);
 
                               final snackBar = SnackBar(
                                 content: Text('Item cadastrado!'),
