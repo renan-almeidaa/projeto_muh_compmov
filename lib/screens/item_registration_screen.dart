@@ -17,10 +17,12 @@ import 'package:scoped_model/scoped_model.dart';
 class ItemRegister extends StatelessWidget {
   String _farmId;
   String _nomefazenda;
+  String _productId;
   List _nomes = new List();
 
-  ItemRegister(String farmId, String nomefazenda) {
+  ItemRegister(String farmId, String productId, String nomefazenda) {
     this._farmId = farmId;
+    this._productId = productId;
     this._nomefazenda = nomefazenda;
   }
 
@@ -61,7 +63,7 @@ class ItemRegister extends StatelessWidget {
           ),
         ],
       ),
-      body: CustomForm(this._farmId, this._nomes),
+      body: CustomForm(this._farmId, this._productId, this._nomes),
       drawer: CustomDrawer(this._nomes),
     );
   }
@@ -70,10 +72,12 @@ class ItemRegister extends StatelessWidget {
 // -- FORM
 class CustomForm extends StatefulWidget {
   String _farmId;
+  String _productId;
   List _nomes;
 
-  CustomForm(String farmId, List nomes) {
+  CustomForm(String farmId, String productId, List nomes) {
     this._farmId = farmId;
+    this._productId = productId;
     this._nomes = nomes;
   }
 
@@ -324,8 +328,8 @@ class _CustomFormState extends State<CustomForm> {
                                 'status':_dropdownMenus['status'],
                                 'description':_descController.text,
                               };
-                              // debugPrint(itemData.toString());
-                              //model.createItemData(itemData, _image, widget._farmId);
+                              debugPrint(itemData.toString());
+                              model.createItemData(itemData, _image, widget._farmId, widget._productId);
 
                               final snackBar = SnackBar(
                                 content: Text('Item cadastrado!'),

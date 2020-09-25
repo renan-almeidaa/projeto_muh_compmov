@@ -15,6 +15,7 @@ void main() {
 
 
   runApp(MyApp());
+  Firestore.instance.collection('tes').document('doc').setData({'nome':'eduardo'});
 
 
 }
