@@ -36,7 +36,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
             child: Text('ok'),
             onPressed: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda, _nomefazenda))
+                  MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda, "E0zreBV00nFJNS4VQQUi" ,_nomefazenda))
               );
             },
           )
@@ -359,7 +359,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                                 RaisedButton.icon(
                                   onPressed: () {
                                     Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda, _nomefazenda))
+                                        MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda,"E0zreBV00nFJNS4VQQUi" ,_nomefazenda))
                                     );
                                   },
                                   icon: Icon(

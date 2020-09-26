@@ -39,14 +39,6 @@ class ItemRegister extends StatelessWidget {
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
         title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-        leading: RaisedButton(
-          // color: Color(0xFF121416),
-          color: Colors.white,
-          child: Icon(Icons.dehaze,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
         actions: [
           RaisedButton(
             // color: Colors.white,

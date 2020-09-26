@@ -142,7 +142,7 @@ class UserModel extends Model{
     itemData.update('image', (value) => value = url);
     //await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(farmId).collection('items').document().setData(itemData)
     //await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection('items').document().setData(itemData);
-   await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection("products").document(IdProduto).setData(itemData);
+   await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection("products").document(IdProduto).collection("items").document().setData(itemData);
   }
 
   bool isLoggedIn(){
