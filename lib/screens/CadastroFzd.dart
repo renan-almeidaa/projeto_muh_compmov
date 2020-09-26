@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -28,14 +29,6 @@ class CadastroFzd extends StatelessWidget {
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
         title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-        leading: RaisedButton(
-          // color: Color(0xFF121416),
-          color: Colors.white,
-          child: Icon(Icons.dehaze,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
         actions: [
           RaisedButton(
             // color: Colors.white,
@@ -53,6 +46,7 @@ class CadastroFzd extends StatelessWidget {
         ],
       ),
       body: CustomForm(_nome),
+      drawer: CustomDrawer(this._nome),
     );
   }
 }
