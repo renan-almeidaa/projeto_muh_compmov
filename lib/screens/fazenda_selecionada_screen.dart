@@ -353,36 +353,36 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                               ),
                             ),
 
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                RaisedButton.icon(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda,"E0zreBV00nFJNS4VQQUi" ,_nomefazenda))
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.add_circle_outline,
-                                    color: Colors.black,
-
-                                  ),
-                                  label: Text(
-                                    "Adicionar item...",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  elevation: 0,
-                                  // color: Colors.white,
-                                  color: Colors.white70,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.elliptical(300,300)),
-                                  ),
-                                ),
-                              ],
-                            ),
+//                            Row(
+//                              crossAxisAlignment: CrossAxisAlignment.start,
+//                              children: <Widget>[
+//                                RaisedButton.icon(
+//                                  onPressed: () {
+//                                    Navigator.of(context).push(
+//                                        MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda,"E0zreBV00nFJNS4VQQUi" ,_nomefazenda))
+//                                    );
+//                                  },
+//                                  icon: Icon(
+//                                    Icons.add_circle_outline,
+//                                    color: Colors.black,
+//
+//                                  ),
+//                                  label: Text(
+//                                    "Adicionar item...",
+//                                    style: TextStyle(
+//                                      fontWeight: FontWeight.w600,
+//                                    ),
+//                                  ),
+//                                  elevation: 0,
+//                                  // color: Colors.white,
+//                                  color: Colors.white70,
+//                                  shape: RoundedRectangleBorder(
+//                                    borderRadius: BorderRadius.all(
+//                                        Radius.elliptical(300,300)),
+//                                  ),
+//                                ),
+//                              ],
+//                            ),
                           ],
                         ),
                       ),
@@ -408,13 +408,15 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                                     ),
                                   );
                                 else {
-                                  popup(context);
+
                                   Map<String,dynamic> produtos = {
                                     'name': _nomedogrupo.text,
                                     'qtd_produtos': _qtdProdutos.text,
                                     'ramo_escolhido': _productionSel,
                                     'image': ""
                                   };
+                                  popup(context);
+
                                   model.pegaNomedeumaFazenda();
                                   model.criaProduto(produtos, _image, this._idFazenda);
 

@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
+import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 // void main() => runApp(MaterialApp(
@@ -73,6 +74,25 @@ class _CustomFormState extends State<CustomForm> {
   File _image;
   String _filename = '';
 
+  popup(BuildContext context, String nome) {
+    return showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("Fazenda selecionada: " + nome),
+        actions: <Widget> [
+          MaterialButton(
+            elevation: 5.0,
+            child: Text('ok'),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => FazendasScreen())
+              );
+            },
+          )
+        ],
+      );
+    });
+  }
+
   String getFileName(File file) {
     return basename(file.path);
   }
@@ -97,7 +117,7 @@ class _CustomFormState extends State<CustomForm> {
           );
         }
         else {
-           this.widget._nome.addAll(model.nome);
+          this.widget._nome.addAll(model.nome);
           return Form(
             key: _formKey,
             child: Container(
@@ -377,6 +397,7 @@ class _CustomFormState extends State<CustomForm> {
 
                               debugPrint(farmData.toString());
                               model.createFarmData(farmData, _image);
+                              popup(context, _nameController.text);
 
                               final snackBar = SnackBar(
                                 content: Text('Fazenda cadastrada!'),
@@ -406,4 +427,3 @@ class _CustomFormState extends State<CustomForm> {
     );
   }
 }
-
