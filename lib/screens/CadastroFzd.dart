@@ -372,8 +372,10 @@ class _CustomFormState extends State<CustomForm> {
                                 'address': _adressController.text,
                                 'productionPrimary': _productionController.text,
                                 'description': _descriptionController.text,
-                                'image': ""
+                                'image': '',
                               };
+
+                              debugPrint(farmData.toString());
                               model.createFarmData(farmData, _image);
 
                               final snackBar = SnackBar(
