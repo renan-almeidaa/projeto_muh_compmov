@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -15,9 +16,14 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ItemRegister extends StatelessWidget {
   String _farmId;
+  String _nomefazenda;
+  String _productId;
+  List _nomes = new List();
 
-  ItemRegister(String farmId) {
+  ItemRegister(String farmId, String productId, String nomefazenda) {
     this._farmId = farmId;
+    this._productId = productId;
+    this._nomefazenda = nomefazenda;
   }
 
   @override
@@ -33,14 +39,6 @@ class ItemRegister extends StatelessWidget {
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
         title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-        leading: RaisedButton(
-          // color: Color(0xFF121416),
-          color: Colors.white,
-          child: Icon(Icons.dehaze,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
         actions: [
           RaisedButton(
             // color: Colors.white,
@@ -57,7 +55,8 @@ class ItemRegister extends StatelessWidget {
           ),
         ],
       ),
-      body: CustomForm(this._farmId),
+      body: CustomForm(this._farmId, this._productId, this._nomes),
+      drawer: CustomDrawer(this._nomes),
     );
   }
 }
@@ -65,9 +64,13 @@ class ItemRegister extends StatelessWidget {
 // -- FORM
 class CustomForm extends StatefulWidget {
   String _farmId;
+  String _productId;
+  List _nomes;
 
-  CustomForm(String farmId) {
+  CustomForm(String farmId, String productId, List nomes) {
     this._farmId = farmId;
+    this._productId = productId;
+    this._nomes = nomes;
   }
 
   @override
@@ -106,6 +109,7 @@ class _CustomFormState extends State<CustomForm> {
           );
         }
         else {
+          this.widget._nomes.addAll(model.nome);
           return Form(
             key: _formKey,
             child: Container(
@@ -316,8 +320,8 @@ class _CustomFormState extends State<CustomForm> {
                                 'status':_dropdownMenus['status'],
                                 'description':_descController.text,
                               };
-                              // debugPrint(itemData.toString());
-                              model.createItemData(itemData, _image, widget._farmId);
+                              debugPrint(itemData.toString());
+                              model.createItemData(itemData, _image, widget._farmId, widget._productId);
 
                               final snackBar = SnackBar(
                                 content: Text('Item cadastrado!'),

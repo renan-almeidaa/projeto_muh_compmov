@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
+import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 // void main() => runApp(MaterialApp(
@@ -14,7 +16,7 @@ import 'package:scoped_model/scoped_model.dart';
 // );
 
 class CadastroFzd extends StatelessWidget {
-
+  List _nome = new List();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,14 +30,6 @@ class CadastroFzd extends StatelessWidget {
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
         title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-        leading: RaisedButton(
-          // color: Color(0xFF121416),
-          color: Colors.white,
-          child: Icon(Icons.dehaze,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
         actions: [
           RaisedButton(
             // color: Colors.white,
@@ -52,7 +46,8 @@ class CadastroFzd extends StatelessWidget {
           ),
         ],
       ),
-      body: CustomForm(),
+      body: CustomForm(_nome),
+      drawer: CustomDrawer(this._nome),
     );
   }
 }
@@ -60,6 +55,11 @@ class CadastroFzd extends StatelessWidget {
 // -- FORM
 class CustomForm extends StatefulWidget {
 
+  List _nome;
+
+  CustomForm(List nome) {
+    this._nome = nome;
+  }
   @override
   _CustomFormState createState() => _CustomFormState();
 }
@@ -73,6 +73,25 @@ class _CustomFormState extends State<CustomForm> {
 
   File _image;
   String _filename = '';
+
+  popup(BuildContext context, String nome) {
+    return showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("Fazenda selecionada: " + nome),
+        actions: <Widget> [
+          MaterialButton(
+            elevation: 5.0,
+            child: Text('ok'),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => FazendasScreen())
+              );
+            },
+          )
+        ],
+      );
+    });
+  }
 
   String getFileName(File file) {
     return basename(file.path);
@@ -90,6 +109,7 @@ class _CustomFormState extends State<CustomForm> {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(
+
       builder: (context, child, model) {
         if(model.isLoading) {
           return Center(
@@ -97,6 +117,7 @@ class _CustomFormState extends State<CustomForm> {
           );
         }
         else {
+          this.widget._nome.addAll(model.nome);
           return Form(
             key: _formKey,
             child: Container(
@@ -268,9 +289,9 @@ class _CustomFormState extends State<CustomForm> {
                             Flexible(
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                  child: _image == null
-                                      ? Container()
-                                           : Image.file(_image),
+                                child: _image == null
+                                    ? Container()
+                                    : Image.file(_image),
                               ),
                             ),
                             RaisedButton.icon(
@@ -369,11 +390,14 @@ class _CustomFormState extends State<CustomForm> {
                               Map<String,dynamic> farmData = {
                                 'name': _nameController.text,
                                 'address': _adressController.text,
-                                'productionPrimary': _productionController,
+                                'productionPrimary': _productionController.text,
                                 'description': _descriptionController.text,
-                                'image': ""
+                                'image': '',
                               };
+
+                              debugPrint(farmData.toString());
                               model.createFarmData(farmData, _image);
+                              popup(context, _nameController.text);
 
                               final snackBar = SnackBar(
                                 content: Text('Fazenda cadastrada!'),
@@ -403,4 +427,3 @@ class _CustomFormState extends State<CustomForm> {
     );
   }
 }
-

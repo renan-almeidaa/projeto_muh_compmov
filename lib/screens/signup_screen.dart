@@ -9,6 +9,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
+
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
@@ -158,7 +159,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       inputFormatters: [maskFormatter],
                     controller: _textBirthController,
                     validator: (text){
-                        if(validatorData(text))return 'Data Inválida';
+                        if(validatorData(text))
+                          return 'Data Inválida';
                     },
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
