@@ -370,7 +370,7 @@ class _CustomFormState extends State<CustomForm> {
                               Map<String,dynamic> farmData = {
                                 'name': _nameController.text,
                                 'address': _adressController.text,
-                                'productionPrimary': _productionController,
+                                'productionPrimary': _productionController.text,
                                 'description': _descriptionController.text,
                                 'image': ""
                               };
