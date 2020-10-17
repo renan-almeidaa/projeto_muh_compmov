@@ -4,6 +4,7 @@ import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/CadastroFzd.dart';
 import 'package:projeto_muh_compmov/screens/TelaPrincipalEntrada.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
+import 'package:projeto_muh_compmov/screens/grid_visitante.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
 import 'package:projeto_muh_compmov/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -172,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.center,
                         child: FlatButton(
                           onPressed: (){
-                            //para qual tela esta vai?
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => GridVisitanteScreen()),
+                            );
                           },
                           child: Text(
                             'Entrar como visitante',
