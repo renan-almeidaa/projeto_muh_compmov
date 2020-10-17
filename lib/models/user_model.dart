@@ -11,9 +11,14 @@ class UserModel extends Model{
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   List nome = [];
+  List produtos = [];
   String idFazenda;
   FirebaseUser firebaseUser;
   Map<String,dynamic> userData = Map();
+  List id = [];
+
+  bool condicional = false;
+
 
   bool isLoading = false;
 
@@ -132,9 +137,51 @@ class UserModel extends Model{
       print("nome12121212121: " + dados["name"]);
       String aux = dados["name"];
       nome.add(aux);
+      id.add(item.documentID);
       print("\n\n\n\n\n dados: " + item.documentID);
       idFazenda = item.documentID;
     }
+  }
+
+  int RetornaIndiceProduto(String NomeFazenda){
+    print("chegou aqui" + NomeFazenda);
+    print("chegou aqui" + this.nome.length.toString());
+    int indice = 0;
+    for(int i=0; i<this.nome.length;i++){
+      if(this.nome[i].toString() == NomeFazenda){
+        print("Nome da fazenda:" + this.nome[i]);
+        print("Id da fazenda:" + this.id[i]);
+        indice = i;
+        break;
+      }
+    }
+    return indice;
+  }
+
+  Future<Null> pegaNomedosProdutos(String idFazenda) async{ // retorna os itens da fazenda da tela do gu
+
+
+    int indice = RetornaIndiceProduto(idFazenda);
+    String idFa = this.id[indice];
+
+
+    QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(idFa).collection('products').getDocuments();
+    for(DocumentSnapshot item in query.documents) {
+      var dados = item.data;
+      print("nome12121212121: " + dados["name"]);
+      String aux = dados["name"];
+      produtos.add(aux);
+      print("\n\n\n\n\n dados: " + item.documentID);
+      //idFazenda = item.documentID;
+    }
+    if(produtos.isEmpty){
+      print("N tem gente aqui");
+      this.condicional = false;
+    }else{
+      this.condicional = true;
+      print("tem gente aqui");
+    }
+
   }
 
   Future<Null> createItemData(Map<String,dynamic> itemData, File image, String farmId, String IdProduto) async {

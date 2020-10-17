@@ -54,6 +54,54 @@ class _FazendasScreen extends State<FazendasScreen> {
     });
   }
 
+  Condicional(BuildContext context, UserModel model, String idFazenda) {
+  print("entrou no cont");
+  print("entrou no cont" + idFazenda.toString());
+  model.pegaNomedosProdutos(idFazenda);
+  print("oiii");
+  if(model.condicional){
+    print( "allloooooo" + model.condicional.toString());
+  }else{
+    print( "allloooooo" + model.condicional.toString());
+  }
+    if (model.condicional) {
+      return Column(
+        children: <Widget>[
+          Container(
+            height: 410,
+              child: GridView.count(
+                  scrollDirection: Axis.vertical,
+                  crossAxisCount: 2,
+                  children: List.generate(model.produtos.length, (index) {
+                    return Container(
+                      margin: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(3),
+                      decoration: new BoxDecoration(
+                        border: new Border.all(color: Colors.black),
+                      ),
+                      child: GestureDetector(
+                        child: Center(
+                          child: Text(
+                            '${model.produtos[index]}',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .headline,
+                          ),
+                        ),
+                        onTap: (){
+                          print("model: " + model.produtos[index]);
+                        },
+                      ),
+                    );
+                  })
+              ),
+            ),
+        ],
+      );
+    }
+  }
+
 
   //para o dropDown
   List<String> _productions = ['Leite', 'hortaliças'];
@@ -67,6 +115,7 @@ class _FazendasScreen extends State<FazendasScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -123,32 +172,9 @@ class _FazendasScreen extends State<FazendasScreen> {
                 ),
                 Column(
                   children: <Widget>[
-                    Container(
-                      height: 410,
-                      child: GestureDetector(
-                        onTap: (){
-                          print("clicado");
-                        },
-                        child: GridView.count(
-                            scrollDirection: Axis.vertical,
-                            crossAxisCount: 2,
-                            children: List.generate(10, (index){
-                              return Container(
-                                margin: const EdgeInsets.all(5),
-                                padding: const EdgeInsets.all(3),
-                                decoration: new BoxDecoration(
-                                  border: new Border.all(color: Colors.black),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Item $index',
-                                    style: Theme.of(context).textTheme.headline,
-                                  ),
-                                ),
-                              );
-                            })
-                        ),
-                      ),
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Condicional(context, model, _productionSel),
                     )
                   ],
                 ),
@@ -184,4 +210,5 @@ class _FazendasScreen extends State<FazendasScreen> {
     );
 
   }
+
 }
