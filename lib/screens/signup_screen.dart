@@ -320,7 +320,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       actions: [
         FlatButton(
           child: Text('OK'),
-          onPressed: (){},
+
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+
+          }
         )
       ],
     );
