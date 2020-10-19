@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_muh_compmov/drawer/IconTile.dart';
-import 'package:projeto_muh_compmov/screens/CadastroFzd.dart';
+import 'package:projeto_muh_compmov/screens/cadastro_fazenda_screen.dart';
 
 
 class IconSectionDown extends StatelessWidget {
