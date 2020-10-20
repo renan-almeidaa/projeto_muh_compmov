@@ -8,6 +8,8 @@ import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
 import 'package:projeto_muh_compmov/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
+
+import 'grid_visitante.dart';
 class LoginScreen extends StatefulWidget {
 @override
 _LoginScreenState createState() => _LoginScreenState();
@@ -173,9 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.center,
                         child: FlatButton(
                           onPressed: (){
-                           // Navigator.of(context).push(
-                             // MaterialPageRoute(builder: (context) => GridVisitanteScreen()),
-                            //);
+                           Navigator.of(context).push(
+                             MaterialPageRoute(builder: (context) => GridVisitanteScreen()),
+                            );
                           },
                           child: Text(
                             'Entrar como visitante',
