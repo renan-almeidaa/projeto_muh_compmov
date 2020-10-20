@@ -64,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             if(text.isEmpty || !text.contains("@")) return 'Email invalido';
                           },
                           decoration: new InputDecoration(
+                              hintText: "Email",
                               border: new OutlineInputBorder(
                                 borderRadius: const BorderRadius.all(
                                   const Radius.circular(20.0),
@@ -84,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           controller: _passController,
                           decoration: new InputDecoration(
+                              hintText: "Senha",
                               border: new OutlineInputBorder(
                                 borderRadius: const BorderRadius.all(
                                   const Radius.circular(20.0),

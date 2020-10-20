@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget{
               primarySwatch: Colors.blue,
             primaryColor: Color.fromARGB(255, 0, 0, 0)
         ),
-          home: LoginScreen(),
+          home: HelpScreen(),
           debugShowCheckedModeBanner: false,
         )
 
