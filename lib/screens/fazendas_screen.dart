@@ -65,11 +65,11 @@ class _FazendasScreen extends State<FazendasScreen> {
     print( "allloooooo" + model.condicional.toString());
   }
     if (model.condicional) {
-      return Column(
+      return new Column(
         children: <Widget>[
           Container(
             height: 410,
-              child: GridView.count(
+              child: new GridView.count(
                   scrollDirection: Axis.vertical,
                   crossAxisCount: 2,
                   children: List.generate(model.produtos.length, (index) {
@@ -99,6 +99,36 @@ class _FazendasScreen extends State<FazendasScreen> {
             ),
         ],
       );
+    }else{
+      return Column(
+        children: <Widget>[
+          Container(
+            height: 410,
+            child: new GridView.count(
+                scrollDirection: Axis.vertical,
+                crossAxisCount: 2,
+                children: List.generate(0, (index) {
+                  return Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(3),
+                    decoration: new BoxDecoration(
+                      border: new Border.all(color: Colors.black),
+                    ),
+                    child: GestureDetector(
+                      child: Center(
+
+                      ),
+                      onTap: (){
+                        print("model: " + model.produtos[index]);
+                      },
+                    ),
+                  );
+                })
+            ),
+          ),
+        ],
+      );
+
     }
   }
 
@@ -141,6 +171,8 @@ class _FazendasScreen extends State<FazendasScreen> {
       ),
       body: ScopedModelDescendant<UserModel>(
           builder: (context, child, model) {
+            //model.produtos.clear();
+            //model.nome.clear();
             return Column(
               children: <Widget>[
                 Padding(

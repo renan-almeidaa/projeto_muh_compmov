@@ -130,7 +130,8 @@ class UserModel extends Model{
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(id_fazenda).collection('products').document().setData(produtos);
   }
 
-  Future<List> pegaNomedeumaFazenda() async{ // retorna os itens da fazenda da tela do gu
+  Future<List> pegaNomedeumaFazenda() async{
+    nome.clear();
     QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').getDocuments();
     for(DocumentSnapshot item in query.documents) {
       var dados = item.data;
@@ -141,6 +142,7 @@ class UserModel extends Model{
       print("\n\n\n\n\n dados: " + item.documentID);
       idFazenda = item.documentID;
     }
+
   }
 
   int RetornaIndiceProduto(String NomeFazenda){
@@ -159,12 +161,9 @@ class UserModel extends Model{
   }
 
   Future<Null> pegaNomedosProdutos(String idFazenda) async{ // retorna os itens da fazenda da tela do gu
-
-
     int indice = RetornaIndiceProduto(idFazenda);
     String idFa = this.id[indice];
-
-
+    //produtos.clear();
     QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(idFa).collection('products').getDocuments();
     for(DocumentSnapshot item in query.documents) {
       var dados = item.data;
@@ -181,7 +180,6 @@ class UserModel extends Model{
       this.condicional = true;
       print("tem gente aqui");
     }
-
   }
 
   Future<Null> createItemData(Map<String,dynamic> itemData, File image, String farmId, String IdProduto) async {
