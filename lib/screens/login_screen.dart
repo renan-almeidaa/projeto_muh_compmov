@@ -4,6 +4,7 @@ import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/cadastro_fazenda_screen.dart';
 import 'package:projeto_muh_compmov/screens/TelaPrincipalEntrada.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
+import 'package:projeto_muh_compmov/screens/feed_screen.dart';
 //import 'package:projeto_muh_compmov/screens/grid_visitante.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
 import 'package:projeto_muh_compmov/screens/signup_screen.dart';
@@ -244,7 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _onSuccess(){
     print(this.name.length);
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => TelaPrincipal(this.name)),
+        MaterialPageRoute(builder: (context) => FeedScreen()),
     );
 }
   void _onFail(){

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
+import 'package:projeto_muh_compmov/screens/feed_screen.dart';
 import 'package:projeto_muh_compmov/screens/login_screen.dart';
 import 'package:projeto_muh_compmov/screens/signup_screen.dart';
 
@@ -38,9 +39,9 @@ class GridVisitanteScreen extends StatelessWidget {
           //);
           break;
         case 1:
-          //Navigator.of(context).push(
-            //MaterialPageRoute(builder: (context) => TelaPrincipal(this.name)),
-          //);
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => FeedScreen()),
+          );
           break;
         case 2:
          /* Navigator.of(context).push(
