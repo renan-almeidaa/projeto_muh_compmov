@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
+import 'package:projeto_muh_compmov/screens/item_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 void main() {}
@@ -91,6 +92,11 @@ class _FazendasScreen extends State<FazendasScreen> {
                         ),
                         onTap: (){
                           print("model: " + model.produtos[index]);
+                          print("Id Fazenda: " + model.id[model.indice]);
+                          print("Id Produto: " + model.produtosId[index]);
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ItemScreen(model.id[model.indice], model.produtosId[index], idFazenda))
+                          );
                         },
                       ),
                     );

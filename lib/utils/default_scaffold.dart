@@ -9,9 +9,10 @@ class DefaultScaffold extends StatelessWidget {
   final List _nomes = new List();
   final Color backgroundColor;
   final Widget _bodyWidget;
+  final Widget _button;
 
-  DefaultScaffold({@required Widget bodyWidget, this.backgroundColor = Colors.white})
-      : this._bodyWidget = bodyWidget;
+  DefaultScaffold({@required Widget bodyWidget, this.backgroundColor = Colors.white, Widget floatingButton})
+      : this._bodyWidget = bodyWidget, this._button = floatingButton;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,7 @@ class DefaultScaffold extends StatelessWidget {
         }
       ),
       drawer: CustomDrawer(this._nomes),
+      floatingActionButton: this._button,
     );
   }
 

@@ -26,7 +26,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
   final String _nomefazenda;
   final String _idFazenda;
 
-  popup(BuildContext context) {
+  popup(BuildContext context, var idProduto) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
         title: Text("Novo tipo adicionado com sucesso!"),
@@ -36,7 +36,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
             child: Text('ok'),
             onPressed: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda, "E0zreBV00nFJNS4VQQUi" ,_nomefazenda))
+                  MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda, idProduto ,_nomefazenda))
               );
             },
           )
@@ -392,7 +392,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                                   borderRadius:
                                   new BorderRadius.circular(30.0)),
                               color: Colors.black,
-                              onPressed: () {
+                              onPressed: () async {
                                 _validarCampos();
                                 popupDeuErrado(context);
                                 if (_mensagemErro != "")
@@ -415,10 +415,11 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                                     'ramo_escolhido': _productionSel,
                                     'image': ""
                                   };
-                                  popup(context);
-
                                   model.pegaNomedeumaFazenda();
-                                  model.criaProduto(produtos, _image, this._idFazenda);
+                                  String idProduto = await model.criaProduto(produtos, _image, this._idFazenda);
+
+                                  // Registra Item
+                                  popup(context, idProduto);
 
                                 }
                               },

@@ -12,10 +12,12 @@ class UserModel extends Model{
   FirebaseAuth _auth = FirebaseAuth.instance;
   List nome = [];
   List produtos = [];
+  List produtosId = [];
   String idFazenda;
   FirebaseUser firebaseUser;
   Map<String,dynamic> userData = Map();
   List id = [];
+  int indice;
 
   bool condicional = false;
 
@@ -124,10 +126,12 @@ class UserModel extends Model{
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(idFarm).collection("products").document().setData(idtag);
   }
 
-  Future<Null> criaProduto(Map<String, dynamic> produtos, File image, String id_fazenda) async {
+  Future<String> criaProduto(Map<String, dynamic> produtos, File image, String id_fazenda) async {
     String url = await _updateImage(image);
     produtos.update('image', (value) => value = url);
-    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(id_fazenda).collection('products').document().setData(produtos);
+    var item = await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(id_fazenda).collection('products').document();
+    item.setData(produtos);
+    return item.documentID;
   }
 
   Future<List> pegaNomedeumaFazenda() async{
@@ -143,6 +147,15 @@ class UserModel extends Model{
       idFazenda = item.documentID;
     }
 
+  }
+
+  Future getItems(String idFazenda, String idProduto) async {
+    var firestore = Firestore.instance;
+
+    // Retorna todos os items do produto selecionado
+    QuerySnapshot qn = await firestore.collection("users").document(firebaseUser.uid).collection("farms").document(idFazenda).collection("products").document(idProduto).collection("items").getDocuments();
+
+    return qn.documents;
   }
 
   int RetornaIndiceProduto(String NomeFazenda){
@@ -161,7 +174,7 @@ class UserModel extends Model{
   }
 
   Future<Null> pegaNomedosProdutos(String idFazenda) async{ // retorna os itens da fazenda da tela do gu
-    int indice = RetornaIndiceProduto(idFazenda);
+    indice = RetornaIndiceProduto(idFazenda);
     String idFa = this.id[indice];
     //produtos.clear();
     QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(idFa).collection('products').getDocuments();
@@ -170,6 +183,7 @@ class UserModel extends Model{
       print("nome12121212121: " + dados["name"]);
       String aux = dados["name"];
       produtos.add(aux);
+      produtosId.add(item.documentID);
       print("\n\n\n\n\n dados: " + item.documentID);
       //idFazenda = item.documentID;
     }
@@ -187,7 +201,7 @@ class UserModel extends Model{
     itemData.update('image', (value) => value = url);
     //await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(farmId).collection('items').document().setData(itemData)
     //await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection('items').document().setData(itemData);
-   await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection("produtos").document(IdProduto).collection("items").document().setData(itemData);
+   await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection("products").document(IdProduto).collection("items").document().setData(itemData);
   }
 
   bool isLoggedIn(){
