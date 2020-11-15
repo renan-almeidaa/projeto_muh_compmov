@@ -24,6 +24,7 @@ import 'package:projeto_muh_compmov/screens/login_screen.dart';class IconSection
           label: "Sair",
           iconData: Icons.exit_to_app,
           onTap: (){
+
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => LoginScreen())
             );

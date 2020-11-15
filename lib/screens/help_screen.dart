@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
+import 'package:projeto_muh_compmov/screens/login_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class HelpScreen extends StatelessWidget {
@@ -67,6 +68,30 @@ class _CustomFormState extends State<CustomForm> {
                 child: Text('ok'),
                 onPressed: () {
                   Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  popupNaoEstaLogado(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+                "ERRO"),
+            content: Text(
+                "Faça o login para reportar o problema"),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text('ok'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LoginScreen())
+                  );
                 },
               )
             ],
@@ -181,11 +206,19 @@ class _CustomFormState extends State<CustomForm> {
                                             padding: EdgeInsets.all(8.0),
                                             child: RaisedButton(
                                               onPressed: () {
-                                                if (_formKey.currentState
-                                                    .validate()) {
-                                                  _formKey.currentState.save();
-                                                  Navigator.of(context).pop();
-                                                  popupReportedProblem(context);
+                                                if(model.isLoggedIn()){
+                                                  if (_formKey.currentState
+                                                      .validate()) {
+                                                    Map<String,dynamic> description = {
+                                                      'description': _descriptionProblemController.text
+                                                    };
+                                                    model.reportProblem(description);
+                                                    Navigator.of(context).pop();
+                                                    popupReportedProblem(context);
+                                                  }
+                                                }
+                                                else{
+                                                    popupNaoEstaLogado(context);
                                                 }
                                               },
                                               child: Text("Enviar"),

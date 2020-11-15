@@ -228,4 +228,9 @@ class UserModel extends Model{
     }
     notifyListeners();
   }
+
+  Future<Null> reportProblem(Map<String,dynamic> description) async {
+
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection("Problemas Relatados").document().setData(description);
+  }
 }
