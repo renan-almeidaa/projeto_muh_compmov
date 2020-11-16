@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_muh_compmov/drawer/IconTile.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
+import 'package:projeto_muh_compmov/screens/Perfil.dart';
 import 'package:projeto_muh_compmov/screens/cadastro_fazenda_screen.dart';
 import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -37,6 +38,9 @@ class _IconSectionState extends State<IconSection> {
                   label: "Perfil",
                   iconData: Icons.person,
                   onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Perfil())
+                    );
                   },
                   high: false,
                 ),

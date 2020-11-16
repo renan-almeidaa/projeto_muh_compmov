@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_muh_compmov/RouteGenerator.dart';
 import 'package:projeto_muh_compmov/screens/cadastro_fazenda_screen.dart';
 import 'package:projeto_muh_compmov/screens/TelaPrincipalEntrada.dart';
-import 'package:projeto_muh_compmov/screens/conversas.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
 import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
 //import 'package:projeto_muh_compmov/screens/grid_visitante.dart';
@@ -35,7 +33,6 @@ class MyApp extends StatelessWidget{
               primarySwatch: Colors.blue,
             primaryColor: Color.fromARGB(255, 0, 0, 0)
         ),
-          onGenerateRoute: RouteGenerator.generateRoute,
           home: LoginScreen(),
           debugShowCheckedModeBanner: false,
         )
