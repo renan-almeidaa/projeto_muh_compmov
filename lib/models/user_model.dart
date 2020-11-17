@@ -149,7 +149,19 @@ class UserModel extends Model{
 
   }
 
-  Future getItems(String idFazenda, String idProduto) async {
+  Future removeItem(String idFazenda, String idProduto, String idItem) async {
+    var firestore = Firestore.instance;
+
+    // Retorna todos os items do produto selecionado
+    await firestore.collection("users").document(firebaseUser.uid)
+        .collection("farms").document(idFazenda)
+        .collection("products").document(idProduto)
+        .collection("items").document(idItem).delete()
+        .then((value) => print("Item: " + idItem + " removido com sucesso!"))
+        .catchError((error) => print("Item: " + idItem + " não pode ser removido..."));
+  }
+
+  Future<List<DocumentSnapshot>> getItems(String idFazenda, String idProduto) async {
     var firestore = Firestore.instance;
 
     // Retorna todos os items do produto selecionado

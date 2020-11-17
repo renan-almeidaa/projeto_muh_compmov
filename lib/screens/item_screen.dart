@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
 import 'package:projeto_muh_compmov/utils/default_scaffold.dart';
@@ -16,6 +19,11 @@ class ItemScreen extends StatefulWidget {
 }
 
 class _ItemScreenState extends State<ItemScreen> {
+
+  Future<void> refreshPage() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {}); // Refresh
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +50,7 @@ class _ItemScreenState extends State<ItemScreen> {
               );
             } else {
               return RefreshIndicator(
-                onRefresh: () async {
-                  await Future.delayed(Duration(seconds: 1));
-                  setState(() {}); // Refresh
-                },
+                onRefresh: refreshPage,
                 child: Column(
                   children: [
                     Expanded(
@@ -70,6 +75,29 @@ class _ItemScreenState extends State<ItemScreen> {
                                       child: Column(
                                         children: [
                                           ListTile(
+                                            trailing: PopupMenuButton(
+                                              onSelected: (value) {
+                                                if(value is Function())
+                                                  value();
+                                                refreshPage();
+                                              },
+                                              icon: Icon(Icons.more_vert),
+                                              itemBuilder: (context) => [
+                                                PopupMenuItem(
+                                                  value: () {
+                                                    String idItem = snapshot.data[index].documentID;
+                                                    model.removeItem(widget._idFazenda, widget._idProduto, idItem);
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.remove_circle_outline),
+                                                      Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                                                      Text("Excluir")
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                             title: Text(
                                               snapshot.data[index].data["name"],
                                               style: TextStyle(
