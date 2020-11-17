@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_muh_compmov/firebase/Fazenda.dart';
+
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model{
@@ -114,6 +114,18 @@ class UserModel extends Model{
     String url = await _updateImage(image);
     farmData.update('image', (value) => value = url);
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document().setData(farmData);
+  }
+  
+  Future<Null> newPublication(Map<String,dynamic> pub, File image) async {
+    String imagem = await _updateImage(image);
+    pub.update('image', (value) => value = imagem);
+    await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').document().setData(pub);
+  }
+
+  Future<Null> generalPublication(Map<String,dynamic> pub, File image) async {
+    String imagem = await _updateImage(image);
+    pub.update('image', (value) => value = imagem);
+    await Firestore.instance.collection('publications').document().setData(pub);
   }
 
   Future<String> pegaItensdeumaFazenda() async{ // retorna os itens da fazenda da tela do gu
