@@ -310,7 +310,7 @@ class _CustomFormState extends State<CustomForm> {
                               fontSize: 20,
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if(_formKey.currentState.validate()) {
                               Map<String,dynamic> itemData = {
                                 'name':_nameController.text,
@@ -329,6 +329,9 @@ class _CustomFormState extends State<CustomForm> {
                               );
 
                               Scaffold.of(context).showSnackBar(snackBar);
+                              await new Future.delayed(const Duration(seconds: 1, milliseconds: 500));
+                              Navigator.of(context).pop();
+
                             } else {
                               final snackBar = SnackBar(
                                 content: Text('Dados incompletos'),

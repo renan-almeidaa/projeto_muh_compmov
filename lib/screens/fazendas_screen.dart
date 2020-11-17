@@ -17,6 +17,12 @@ class FazendasScreen extends StatefulWidget {
 }
 
 class _FazendasScreen extends State<FazendasScreen> {
+
+  Future<void> refreshPage() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {});
+  }
+
   popup(BuildContext context, String nome, String id) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
@@ -56,15 +62,15 @@ class _FazendasScreen extends State<FazendasScreen> {
   }
 
   Condicional(BuildContext context, UserModel model, String idFazenda) {
-  print("entrou no cont");
-  print("entrou no cont" + idFazenda.toString());
-  model.pegaNomedosProdutos(idFazenda);
-  print("oiii");
-  if(model.condicional){
-    print( "allloooooo" + model.condicional.toString());
-  }else{
-    print( "allloooooo" + model.condicional.toString());
-  }
+    // print("entrou no cont");
+    // print("entrou no cont" + idFazenda.toString());
+    model.pegaNomedosProdutos(idFazenda);
+    // print("oiii");
+    // if(model.condicional){
+    //   print( "allloooooo" + model.condicional.toString());
+    // } else {
+    //   print( "allloooooo" + model.condicional.toString());
+    // }
     if (model.condicional) {
       return new Column(
         children: <Widget>[
@@ -198,6 +204,7 @@ class _FazendasScreen extends State<FazendasScreen> {
                         setState(() {
                           _productionSel = newValue;
                         });
+                        refreshPage();
                       },
                       items: model.nome.map((location) {
                         return DropdownMenuItem(
