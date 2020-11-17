@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
+import 'package:projeto_muh_compmov/screens/cadastro_fazenda_screen.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
 import 'package:projeto_muh_compmov/screens/item_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -192,7 +193,7 @@ class _FazendasScreen extends State<FazendasScreen> {
             return Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(bottom: 20),
+                  padding: EdgeInsets.only(bottom: 5),
                   child: new Center(
                     child: DropdownButton(
                       icon: Icon(Icons.arrow_downward),
@@ -222,13 +223,13 @@ class _FazendasScreen extends State<FazendasScreen> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(5),
+                      padding: EdgeInsets.all(1),
                       child: Condicional(context, model, _productionSel),
                     )
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.all(25),
+                  padding: EdgeInsets.all(1),
                   child: RaisedButton(
                     color: Colors.black,
                     onPressed: (){
@@ -251,6 +252,31 @@ class _FazendasScreen extends State<FazendasScreen> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.all(1),
+                  child: RaisedButton(
+                    color: Colors.black,
+                    onPressed: (){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => CadastroFzd())
+                      ).then((value) async {
+                        model.pegaNomedeumaFazenda();
+                        await Future.delayed(Duration(seconds: 1));
+                        setState(() {});
+                      });
+                    },
+                    child: Text(
+                      "Adicionar Nova Fazenda",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      side: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                )
               ],
             );
           }

@@ -190,6 +190,8 @@ class UserModel extends Model{
     String idFa = this.id[indice];
     //produtos.clear();
     QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(idFa).collection('products').getDocuments();
+    produtos.clear();
+    produtosId.clear();
     for(DocumentSnapshot item in query.documents) {
       var dados = item.data;
       print("nome12121212121: " + dados["name"]);
