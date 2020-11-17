@@ -32,9 +32,11 @@ class _FazendasScreen extends State<FazendasScreen> {
             elevation: 5.0,
             child: Text('ok'),
             onPressed: () {
+              Navigator.pop(context);
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => FazendaSelecionadaScreen(nome, id))
               );
+
             },
           )
         ],
@@ -51,9 +53,11 @@ class _FazendasScreen extends State<FazendasScreen> {
             elevation: 5.0,
             child: Text('ok'),
             onPressed: () {
+              Navigator.pop(context);
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => FazendasScreen())
               );
+
             },
           )
         ],
