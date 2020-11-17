@@ -47,7 +47,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         ],
       ),
 
-      drawer: CustomDrawer(this.name),
+      drawer: CustomDrawer(),
     );
   }
 }

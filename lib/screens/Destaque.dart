@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_muh_compmov/screens/Pub.dart';
 
 class Destaque extends StatelessWidget {
   @override
@@ -10,32 +11,39 @@ class Destaque extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
-            Column(
-              children: [
-                CircleAvatar(radius: 30,
+            GestureDetector(
+              child: Column(
+                children: [
+                  CircleAvatar(radius: 30,
+                    child: CircleAvatar(
+                      radius: 29,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.add, size: 35, color: Colors.black),
 
-                child: CircleAvatar(
-                  radius: 29,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.add, size: 35, color: Colors.black),
-                ),
-                backgroundColor: Colors.black,),
-                Padding(
+                    ),
+                    backgroundColor: Colors.black,),
+                  Padding(
                     padding: const EdgeInsets.only(top:8.0),
-                  child: Container(
-                    width: 60,
-                    child: Flexible(
-                      child: Center(
-                        child: Text(
+                    child: Container(
+                      width: 60,
+                      child: Flexible(
+                        child: Center(
+                          child: Text(
                             "Publicar",
-                          overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
-            )
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => Pub())
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -8,17 +8,17 @@ import 'package:scoped_model/scoped_model.dart';
 
 class IconSection extends StatefulWidget {
 
-  final List nome;
-  IconSection(this.nome);
+  //final List nome;
+  IconSection();
 
   @override
-  _IconSectionState createState() => _IconSectionState(this.nome);
+  _IconSectionState createState() => _IconSectionState();
 }
 
 class _IconSectionState extends State<IconSection> {
 
-  final List nome;
-  _IconSectionState(this.nome);
+  //final List nome;
+  //_IconSectionState(this.nome);
 
 
   @override

@@ -15,18 +15,18 @@ import 'icon_section.dart';
 
 class CustomDrawer extends StatefulWidget {
 
-  final List nome;
+  //final List nome;
 
-  CustomDrawer(this.nome);
+  CustomDrawer();
 
   @override
-  _CustomDrawerState createState() => _CustomDrawerState(this.nome);
+  _CustomDrawerState createState() => _CustomDrawerState();
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
 
-  final List nome;
-  _CustomDrawerState(this.nome);
+  //final List nome;
+  _CustomDrawerState();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: ListView(
         children: <Widget>[
           CustomHeader(),
-          IconSection(this.nome),
+          IconSection(),
           Divider(color: Colors.grey[500],),
           IconSectionDown(),
         ],

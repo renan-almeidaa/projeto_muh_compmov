@@ -55,7 +55,7 @@ class DefaultScaffold extends StatelessWidget {
           }
         }
       ),
-      drawer: CustomDrawer(this._nomes),
+      drawer: CustomDrawer(),
       floatingActionButton: this._button,
     );
   }

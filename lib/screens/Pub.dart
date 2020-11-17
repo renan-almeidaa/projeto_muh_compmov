@@ -7,8 +7,6 @@ import 'package:scoped_model/scoped_model.dart';
 
 class Pub  extends StatefulWidget {
 
-
-
   @override
   _Pub createState() => _Pub();
 

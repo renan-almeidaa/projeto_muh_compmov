@@ -56,7 +56,7 @@ class ItemRegister extends StatelessWidget {
         ],
       ),
       body: CustomForm(this._farmId, this._productId, this._nomes),
-      drawer: CustomDrawer(this._nomes),
+      drawer: CustomDrawer(),
     );
   }
 }

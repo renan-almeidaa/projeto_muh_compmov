@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/feed/feed.dart';
 import 'package:projeto_muh_compmov/screens/Feed.dart';
 
@@ -10,78 +11,38 @@ class Perfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: new IconThemeData(color: Colors.black),
+        //  leading: Image.asset("imagens/cow.png"),
+        title: Image.asset(
+          "assets/vakinha.png",
+          alignment: Alignment.center,
+          scale: 3.5,
+        ),
+        actions: [
+          RaisedButton(
+            // color: Colors.white,
+            //padding: EdgeInsets.only(0.2),
+            child: Icon(Icons.message),
+            color: Colors.white,
+            onPressed: () {
+              // vai para as mensagens...
+            },
+          ),
+        ],
+      ),
 
       body: ListView(
         children: [
           Column(
             children: [
               SizedBox(
-                height: 25,
+                height: 0,
               ),
+
               Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black
-                      ),
-                    ]
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Text(
-                        "Gustavo Gatti Alves",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold
-                        ),
-                      ), //Aqui muda o nome da pessoa
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.access_time),
-                          onPressed: (){},
-                          iconSize: 30,
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.dehaze),
-                          onPressed: (){},
-                          iconSize: 30,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "12",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    Text(
-                        " visita ao perfil nos ultimos 7 dias"
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 1,
-                thickness: 0.1,
-                color: Colors.black,
-              ), Container(
                 height: MediaQuery.of(context).size.height/2.3,
                 color: Colors.white,
                 child: Column(
@@ -294,6 +255,7 @@ class Perfil extends StatelessWidget {
           ),
         ],
       ),
+      drawer: CustomDrawer(),
       );
     }
   }

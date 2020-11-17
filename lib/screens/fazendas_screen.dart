@@ -281,7 +281,7 @@ class _FazendasScreen extends State<FazendasScreen> {
             );
           }
       ),
-      drawer: CustomDrawer(this.name),
+      drawer: CustomDrawer(),
     );
 
   }

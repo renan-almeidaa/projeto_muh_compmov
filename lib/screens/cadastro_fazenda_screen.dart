@@ -47,7 +47,7 @@ class CadastroFzd extends StatelessWidget {
         ],
       ),
       body: CustomForm(_nome),
-      drawer: CustomDrawer(this._nome),
+      drawer: CustomDrawer(),
     );
   }
 }

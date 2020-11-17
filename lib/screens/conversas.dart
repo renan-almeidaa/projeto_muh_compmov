@@ -15,7 +15,7 @@ class Conversas extends StatelessWidget {
         title: Text("Conversas"),
       ),
       body: CustomForm(_nome),
-      drawer: CustomDrawer(this._nome),
+      drawer: CustomDrawer(),
     );
   }
 }
