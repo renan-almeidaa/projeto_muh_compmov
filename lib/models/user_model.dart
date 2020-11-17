@@ -11,7 +11,7 @@ class UserModel extends Model{
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   List nome = [];
-  List produtos = [];
+  List produtos = []; // products
   List produtosId = [];
   String idFazenda;
   FirebaseUser firebaseUser;

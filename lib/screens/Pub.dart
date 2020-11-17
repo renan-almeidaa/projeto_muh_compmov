@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/Perfil.dart';
-
+//Tela amanda
 import 'package:scoped_model/scoped_model.dart';
 
 class Pub  extends StatefulWidget {
