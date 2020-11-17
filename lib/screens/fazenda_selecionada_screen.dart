@@ -35,6 +35,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
             elevation: 5.0,
             child: Text('ok'),
             onPressed: () {
+              Navigator.pop(context);
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda, idProduto ,_nomefazenda))
               );
@@ -54,6 +55,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
             elevation: 5.0,
             child: Text('ok'),
             onPressed: () {
+              Navigator.pop(context);
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => FazendaSelecionadaScreen(_nomefazenda, _idFazenda))
               );
@@ -394,7 +396,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                               color: Colors.black,
                               onPressed: () async {
                                 _validarCampos();
-                                popupDeuErrado(context);
+                                //popupDeuErrado(context);
                                 if (_mensagemErro != "")
                                   _scaffoldKey.currentState.showSnackBar(
                                     SnackBar(
