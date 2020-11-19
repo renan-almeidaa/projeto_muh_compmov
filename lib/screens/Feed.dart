@@ -19,11 +19,14 @@ class FeedPerfil extends StatelessWidget {
     return ScopedModelDescendant<UserModel>(
         builder: (context, child, model){
           return  Container(
-            child: FutureBuilder(
-              future: model.getItems(widget._idFazenda, widget._idProduto),
-              builder: (_, snapshot) {
-
-              }
+            child: Column(
+              children: [
+                Wrap(
+                  children: [
+            Foto(model.preco[0], model.descricao[0], model.imagem[0])
+                  ],
+                )
+              ],
             )
           );
         }
