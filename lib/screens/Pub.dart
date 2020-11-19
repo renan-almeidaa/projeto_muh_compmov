@@ -6,7 +6,7 @@ import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/Perfil.dart';
 //Tela amanda
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:intl/intl.dart';
 class Pub  extends StatefulWidget {
 
   @override
@@ -17,7 +17,9 @@ class Pub  extends StatefulWidget {
 class _Pub extends State<Pub> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _preco = TextEditingController();
-
+  static final DateTime now = DateTime.now();
+  static final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final String formatted = formatter.format(now);
 
   imagemAdicionada(BuildContext context) {
     return showDialog(context: context, builder: (context) {
@@ -346,6 +348,7 @@ class _Pub extends State<Pub> {
                                     'image': "",
                                    'descrição': _descriptionController.text,
                                    'preço': _preco.text,
+                                     'date': formatted,
 
                                   };
                                   popup(context);
