@@ -18,6 +18,13 @@ class UserModel extends Model{
   Map<String,dynamic> userData = Map();
   List id = [];
   int indice;
+  String nome_identificacao;
+  String email;
+
+  List preco = [];
+  List descricao = [];
+  List imagem = [];
+
 
   bool condicional = false;
 
@@ -102,6 +109,44 @@ class UserModel extends Model{
       return url;
     }
     return "";
+  }
+
+  Future<Null> Publicacoes() async{
+    this.imagem.clear();
+    this.descricao.clear();
+    this.preco.clear();
+    print("Cheguei aqui");
+
+    List descricao = [];
+    List imagem =  [];
+    List preco = [];
+
+    QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').getDocuments();
+    print("Cheguei aqui");
+    for(DocumentSnapshot item in query.documents) {
+      var dados = item.data;
+      descricao.add(dados["descrição"]);
+      imagem.add(dados["image"]);
+      preco.add(dados["preço"]);
+
+      print("descricao: " + dados["descrição"]);
+      print("Imagem: " + dados["image"]);
+      print("Preco: " + dados["preço"]);
+    }
+
+    print("Tamanho das listas: " + preco.length.toString());
+    print("Tamanho das listas: " + descricao.length.toString());
+    print("Tamanho das listas: " + imagem.length.toString());
+
+    this.descricao = descricao;
+    this.preco = preco;
+    this.imagem = imagem;
+
+
+    print("Tamanho das listas: " + this.preco.length.toString());
+    print("Tamanho das listas: " + this.descricao.length.toString());
+    print("Tamanho das listas: " + this.imagem.length.toString());
+
   }
 
   Future<Null> createProdutoData(Map<String,dynamic> farmData, String idFarm) async {
@@ -197,6 +242,31 @@ class UserModel extends Model{
     return indice;
   }
 
+  Future<Null> RetornarNome() async{
+    String nome = "";
+    String id = await Firestore.instance.collection('users').document(firebaseUser.uid).documentID;
+    QuerySnapshot query = await Firestore.instance.collection('users').getDocuments();
+    //print("teste de nome: " + teste);
+    String sobrenome = "";
+    String email1 = "";
+
+    for(DocumentSnapshot item in query.documents){
+      var dado = item.data;
+      if(id == item.documentID){
+        //print("dado ajshkjasa: " + item.documentID);
+         print("nome12121212121: " + dado["name"]);
+         nome = dado["name"];
+         sobrenome = dado["lastname"];
+         print("nome12121212121: " + dado["lastname"]);
+         email1 = dado["email"];
+      }
+
+    }
+    print("askujhsjkas");
+    this.email = email1;
+    nome_identificacao = nome + " " + sobrenome;
+  }
+
   Future<Null> pegaNomedosProdutos(String idFazenda) async{ // retorna os itens da fazenda da tela do gu
     indice = RetornaIndiceProduto(idFazenda);
     String idFa = this.id[indice];
@@ -254,6 +324,8 @@ class UserModel extends Model{
     }
     notifyListeners();
   }
+
+
 
   Future<Null> reportProblem(Map<String,dynamic> description) async {
 
