@@ -111,7 +111,7 @@ class UserModel extends Model{
     return "";
   }
 
-  Future<Map<String,List<String>>> Publicacoes() async{
+  Future<Null> Publicacoes() async{
     this.imagem.clear();
     this.descricao.clear();
     this.preco.clear();
@@ -147,9 +147,6 @@ class UserModel extends Model{
     print("Tamanho das listas: " + this.descricao.length.toString());
     print("Tamanho das listas: " + this.imagem.length.toString());
 
-    return (new Map(){
-
-    });
   }
 
   Future<Null> createProdutoData(Map<String,dynamic> farmData, String idFarm) async {
