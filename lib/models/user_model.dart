@@ -262,6 +262,7 @@ class UserModel extends Model{
       }
 
     }
+    print("askujhsjkas");
     this.email = email1;
     nome_identificacao = nome + " " + sobrenome;
   }
