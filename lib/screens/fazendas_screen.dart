@@ -85,13 +85,21 @@ class _FazendasScreen extends State<FazendasScreen> {
                   scrollDirection: Axis.vertical,
                   crossAxisCount: 2,
                   children: List.generate(model.produtos.length, (index) {
-                    return Container(
-                      margin: const EdgeInsets.all(5),
-                      padding: const EdgeInsets.all(3),
-                      decoration: new BoxDecoration(
-                        border: new Border.all(color: Colors.black),
-                      ),
-                      child: GestureDetector(
+                    return GestureDetector(
+                      onTap: (){
+                        print("model: " + model.produtos[index]);
+                        print("Id Fazenda: " + model.id[model.indice]);
+                        print("Id Produto: " + model.produtosId[index]);
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => ItemScreen(model.id[model.indice], model.produtosId[index], idFazenda))
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(3),
+                        decoration: new BoxDecoration(
+                          border: new Border.all(color: Colors.black),
+                        ),
                         child: Center(
                           child: Text(
                             '${model.produtos[index]}',
@@ -101,14 +109,6 @@ class _FazendasScreen extends State<FazendasScreen> {
                                 .headline,
                           ),
                         ),
-                        onTap: (){
-                          print("model: " + model.produtos[index]);
-                          print("Id Fazenda: " + model.id[model.indice]);
-                          print("Id Produto: " + model.produtosId[index]);
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => ItemScreen(model.id[model.indice], model.produtosId[index], idFazenda))
-                          );
-                        },
                       ),
                     );
                   })
