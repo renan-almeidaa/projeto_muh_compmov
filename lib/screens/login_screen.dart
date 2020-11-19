@@ -162,6 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             if(_formKey.currentState.validate()){
                               model.SignOut();
                               model.pegaNomedeumaFazenda();
+                              model.RetornarNome();
+                              model.Publicacoes();
                               this.name = model.nome;
                               model.signIn(
                                   email: _emailController.text,

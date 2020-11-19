@@ -11,46 +11,50 @@ import 'package:scoped_model/scoped_model.dart';
 class CustomHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 115,
-      padding: const EdgeInsets.only(left:40),
-      color: Colors.black,
-      child: Row(
-        children: <Widget>[
-          Icon(
-            Icons.person,
-            color: Colors.white,
-            size: 30,
-          ),
-          const SizedBox(width: 20,),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return ScopedModelDescendant<UserModel>(
+        builder: (context, child, model){
+          return Container(
+            height: 115,
+            padding: const EdgeInsets.only(left:40),
+            color: Colors.black,
+            child: Row(
               children: <Widget>[
-                Text(
-                  "Acesse sua conta agora",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  overflow: TextOverflow.clip,
+                Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: 30,
                 ),
-                Text(
-                  "Clique aqui",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                const SizedBox(width: 20,),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        model.nome_identificacao,//Nome
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.clip,
+                      ),
+                      Text(
+                        model.email,//Email
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        overflow: TextOverflow.clip,
+                      ),
+                    ],
                   ),
-                  overflow: TextOverflow.clip,
-                ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
+        }
+        );
   }
 }

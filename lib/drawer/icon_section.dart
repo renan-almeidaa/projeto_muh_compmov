@@ -38,6 +38,7 @@ class _IconSectionState extends State<IconSection> {
                   label: "Perfil",
                   iconData: Icons.person,
                   onTap: (){
+
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => Perfil())
                     );
@@ -67,13 +68,6 @@ class _IconSectionState extends State<IconSection> {
                 IconTile(
                   label: "Buscar",
                   iconData: Icons.search,
-                  onTap: (){
-                  },
-                  high: false,
-                ),
-                IconTile(
-                  label: "Dashboard",
-                  iconData: Icons.assignment,
                   onTap: (){
                   },
                   high: false,
