@@ -110,6 +110,16 @@ class UserModel extends Model{
     }
     return "";
   }
+  
+  Future<List<DocumentSnapshot>> getUsers() async {
+    QuerySnapshot q = await Firestore.instance.collection("users").getDocuments();
+    return q.documents;
+  }
+  
+  Future<List<DocumentSnapshot>> getUserPublication(String userId) async {
+    QuerySnapshot q = await Firestore.instance.collection("users").document(userId).collection("publicacao").getDocuments();
+    return q.documents;
+  }
 
   Future<Null> Publicacoes() async{
     this.imagem.clear();
@@ -165,7 +175,17 @@ class UserModel extends Model{
     String imagem = await _updateImage(image);
     pub.update('image', (value) => value = imagem);
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').document().setData(pub);
-  }
+  } // AMANDA
+
+  Future<Null> getPublication(String id, String nome) async {
+    DocumentSnapshot publication = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').document(id).get();
+    var dado = (publication.data);
+    String desc = dado['descrição'];
+    String data = dado['formatted'];
+    String img  = dado['image'];
+    String prec = dado['preço'];
+    return (desc + data +img+prec);
+  } // AMANDA
 
   Future<Null> generalPublication(Map<String,dynamic> pub, File image) async {
     String imagem = await _updateImage(image);

@@ -20,7 +20,7 @@ class _Pub extends State<Pub> {
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('yyyy-MM-dd');
   final String formatted = formatter.format(now);
-
+  
   imagemAdicionada(BuildContext context) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
@@ -352,7 +352,6 @@ class _Pub extends State<Pub> {
 
                                   };
                                   popup(context);
-
                                   model.newPublication(publication, _image);
                                   model.generalPublication(publication, _image);
 
