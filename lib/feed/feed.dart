@@ -7,19 +7,26 @@ import 'package:projeto_muh_compmov/utils/stateful_flat_button.dart';
 
 class Feed implements IFeed {
 
-  // final User __userInfo; // Informações de quem postou, link de perfil, nome e imagem de perfil.
-  // final Content __publicationContent // Informações da publicação vinda do banco de dados.
+  // UserInfo: userId, userName, userImage
+  // PubInfo: pubId, pubDesc, pubDate, pubImage
 
-  final Map userInfo; // Test
-  final String text;
-  final DateTime date;
+  final Map<String, String> _userInfo;
+  final Map<String, String> _pubInfo;
 
-  bool __favState = false; // Informação se o usuário favoritou a publicação
-  bool __likeState = false; // Informação se o usuário curtiu a publicação
+  Map<String, String> get userInfo {
+    return this._userInfo;
+  }
+
+  Map<String, String> get pubInfo {
+    return this._pubInfo;
+  }
+
+  bool _favState = false; // Informação se o usuário favoritou a publicação
+  bool _likeState = false; // Informação se o usuário curtiu a publicação
   // A data tem que ser de acordo com a data de publicação
   // que vem do banco de dados.
-  Feed({@required this.text, @required this.userInfo})
-      : this.date = DateTime.now();
+  Feed({@required userInfo, @required pubInfo})
+    : this._userInfo = userInfo, this._pubInfo = pubInfo;
 
   @override
   Widget render() {
@@ -40,12 +47,12 @@ class Feed implements IFeed {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(userInfo["image"])
+                  image: NetworkImage(this._userInfo["userImage"])
                 )
               ),
             ),
-            title: Text(userInfo["name"]),
-            subtitle: Text("Enviado em ${DateFormat("dd/MM/yyyy").format(date)}"),
+            title: Text(this._userInfo["userName"]),
+            subtitle: Text("Enviado em ${this._pubInfo["pubDate"]}"),
           ),
           renderContent(),
           renderBottom(),
@@ -60,7 +67,7 @@ class Feed implements IFeed {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(this.text),
+          child: Text(this._pubInfo["pubDesc"]),
         ),
       ],
     );
@@ -72,12 +79,12 @@ class Feed implements IFeed {
       alignment: MainAxisAlignment.center,
       children: <Widget>[
         StatefulFlatButton(
-          state: this.__likeState,
+          state: this._likeState,
           iconActive: Icons.thumb_up,
           iconInactive: Icons.thumb_up,
         ),
         StatefulFlatButton(
-          state: this.__favState,
+          state: this._favState,
           iconActive: Icons.favorite,
           iconInactive: Icons.favorite_border,
           fillColorActive: Colors.red,

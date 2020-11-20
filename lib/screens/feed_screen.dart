@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:projeto_muh_compmov/feed/feed_image.dart';
@@ -40,32 +41,68 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
 
-  List<IFeed> _feed = [];
-
-  // Inicialização utilizada para testes
-  @override
-  void initState() {
-    super.initState();
-    _feed.add(Feed(
-      text: "Uma dúzia de ovos R\$5,00",
-      userInfo: {"image" : "https://plx-api.plox.com.br/files/body/old/o-rei-3.jpg", "name" : "Bruno Mezenga"}
-    ));
-    _feed.add(FeedImage(
-      text: "Mais um dia, mais um queijo! R\$8,00 kg",
-      userInfo: {"image" : "https://blogs.canalrural.com.br/coisasdocampo/wp-content/uploads/sites/11/2015/09/VACA-1.jpg", "name" : "João Carlos"},
-      imageUrl: "https://www.proteste.org.br/-/media/proteste/images/home/alimentacao/queijo%20minas/pim_queijo-minas_02.png?rev=1717f860-017d-4a2d-887b-ddc8f1d6a40f"
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return DefaultScaffold(
-      bodyWidget: ListView.builder(
-        itemCount: _feed.length,
-        itemBuilder: (context, index) => _feed[index].render(),
-      ),
-      backgroundColor: Colors.grey[100],
+    return ScopedModelDescendant<UserModel>(
+      builder: (context, child, model) {
+        if(model.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return DefaultScaffold(
+            bodyWidget: FutureBuilder(
+              future: this._getAllPublications(model),
+              builder: (_, feedList) {
+                if(feedList.connectionState == ConnectionState.waiting) {
+                  return new Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: feedList.data.length,
+                    itemBuilder: (context, index) => feedList.data[index].render(),
+                  );
+                }
+              }
+            ),
+            backgroundColor: Colors.grey[100],
+          );
+        }
+      }
     );
+  }
+
+  Future<List<IFeed>> _getAllPublications(UserModel model) async {
+    List<IFeed> pub = [];
+    for(DocumentSnapshot ds in await model.getUsers()) { // Pega os usuários
+      // Monta o mapa com as informações do usuário
+      Map<String, String> userInfo = {
+        "userId" : ds.documentID,
+        "userName" : ds.data["name"] + " " + ds.data["lastname"],
+        "userImage" : ds.data["imagem"],
+      };
+
+      List<DocumentSnapshot> pub_ds_l = await model.getUserPublication(ds.documentID);
+      for(DocumentSnapshot pub_ds in pub_ds_l) { // Pega as publicações do usuário
+        // Monta o mapa com as informações da publicação
+        Map<String, String> pubInfo = {
+          "pubId" : pub_ds.documentID,
+          "pubDesc" : pub_ds.data["descrição"],
+          "pubDate" : pub_ds.data["formatted"],
+          "pubImage" : pub_ds.data["image"],
+        };
+
+        if(pubInfo["pubImage"].isNotEmpty) {
+          pub.add(FeedImage(userInfo: userInfo, pubInfo: pubInfo));
+        } else {
+          pub.add(Feed(userInfo: userInfo, pubInfo: pubInfo));
+        }
+
+      }
+    }
+
+    return pub;
   }
 
 }

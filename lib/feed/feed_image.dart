@@ -4,10 +4,8 @@ import 'package:projeto_muh_compmov/feed/feed.dart';
 
 class FeedImage extends Feed {
 
-  final String imageUrl; // Url da imagem da publicação
-
-  FeedImage({@required String text, @required userInfo, @required this.imageUrl})
-      : super(text: text, userInfo: userInfo);
+  FeedImage({@required userInfo, @required pubInfo})
+      : super(userInfo: userInfo, pubInfo: pubInfo);
 
   @override
   Widget renderContent() {
@@ -16,14 +14,14 @@ class FeedImage extends Feed {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(super.text),
+          child: Text(super.pubInfo["pubDesc"]),
         ),
         Container(
           width: double.infinity,
           height: 300,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(this.imageUrl)
+              image: NetworkImage(super.pubInfo["pubImage"])
             )
           ),
         ),
