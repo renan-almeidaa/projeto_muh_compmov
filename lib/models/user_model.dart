@@ -158,6 +158,10 @@ class UserModel extends Model{
     print("Tamanho das listas: " + this.imagem.length.toString());
 
   }
+  Future<List<DocumentSnapshot>> getFotosPerfil() async {
+    QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').getDocuments();
+    return query.documents;
+  }
 
   Future<Null> createProdutoData(Map<String,dynamic> farmData, String idFarm) async {
     // String url = await _updateImage(image);
@@ -279,6 +283,7 @@ class UserModel extends Model{
          sobrenome = dado["lastname"];
          print("nome12121212121: " + dado["lastname"]);
          email1 = dado["email"];
+
       }
 
     }

@@ -65,13 +65,7 @@ class _IconSectionState extends State<IconSection> {
                   },
                   high: false,
                 ),
-                IconTile(
-                  label: "Buscar",
-                  iconData: Icons.search,
-                  onTap: (){
-                  },
-                  high: false,
-                ),
+
               ]
           );
         }

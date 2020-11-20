@@ -19,11 +19,26 @@ class CustomHeader extends StatelessWidget {
             color: Colors.black,
             child: Row(
               children: <Widget>[
-                Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 30,
+               // Icon(
+                 // Icons.person,
+                  //color: Colors.white,
+                  //size: 30,
+                //),
+                Center(
+                  child : new Container(
+                    width: 60.0,
+                    height: 60.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                                "https://static.tuasaude.com/media/article/gl/lo/beneficios-do-abacate_13382_l.jpg")//AQUI GU VC SÓ PRECISA POR O LINK DA IMAGEM AQUI QUE VOCE UPOR PARA O FIREBASE
+                        )
+                    ),
+                  ),
                 ),
+
                 const SizedBox(width: 20,),
                 Expanded(
                   child: Column(
@@ -56,5 +71,9 @@ class CustomHeader extends StatelessWidget {
           );
         }
         );
+
+
   }
+
+
 }
