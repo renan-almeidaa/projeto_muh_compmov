@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/cadastro_fazenda_screen.dart';
+import 'package:projeto_muh_compmov/screens/conversas.dart';
 import 'package:projeto_muh_compmov/screens/fazenda_selecionada_screen.dart';
 import 'package:projeto_muh_compmov/screens/item_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -181,7 +182,9 @@ class _FazendasScreen extends State<FazendasScreen> {
             child: Icon(Icons.message),
             color: Colors.white,
             onPressed: () {
-              // vai para as mensagens...
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Conversas())
+              );
             },
           ),
         ],
