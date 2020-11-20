@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:projeto_muh_compmov/feed/feed_image.dart';
@@ -39,6 +40,7 @@ class PublicationsScreen extends StatefulWidget {
 }
 
 class _PublicationsScreenState extends State<PublicationsScreen> {
+
   List<IFeed> _feed = [];
   @override
   void initState() {

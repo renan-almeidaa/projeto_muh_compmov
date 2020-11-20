@@ -39,8 +39,7 @@ class Perfil extends StatelessWidget {
             ],
           ),
 
-          body:
-          ListView(
+          body: ListView(
             children: [
               Column(
                   children: [
@@ -193,7 +192,9 @@ class Perfil extends StatelessWidget {
                       thickness: 0.1,
                       color: Colors.black,
                     ),
-                    FeedPerfil(),
+
+                      FeedPerfil(model),
+
                     ]
               ),
             ],
