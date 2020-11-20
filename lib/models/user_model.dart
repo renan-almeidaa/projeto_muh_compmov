@@ -110,6 +110,16 @@ class UserModel extends Model{
     }
     return "";
   }
+  
+  Future<List<DocumentSnapshot>> getUsers() async {
+    QuerySnapshot q = await Firestore.instance.collection("users").getDocuments();
+    return q.documents;
+  }
+  
+  Future<List<DocumentSnapshot>> getUserPublication(String userId) async {
+    QuerySnapshot q = await Firestore.instance.collection("users").document(userId).collection("publicacao").getDocuments();
+    return q.documents;
+  }
 
   Future<Null> Publicacoes() async{
     this.imagem.clear();

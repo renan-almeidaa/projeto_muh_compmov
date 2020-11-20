@@ -39,8 +39,7 @@ class Perfil extends StatelessWidget {
             ],
           ),
 
-          body: ListView(
-            children: [
+          body:
               Column(
                   children: [
                     SizedBox(
@@ -192,13 +191,52 @@ class Perfil extends StatelessWidget {
                       thickness: 0.1,
                       color: Colors.black,
                     ),
-
-                      FeedPerfil(model),
-
+                    Expanded(child: SizedBox(
+                      height: 20,
+                      child: Wrap(
+                        children: [
+                          Expanded(
+                              child: SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                                child: GridView.count(
+                                  scrollDirection: Axis.vertical,
+                                  crossAxisCount: 3,
+                                  children: List.generate(model.preco.length, (index) {
+                                    return GestureDetector(
+                                      onTap: (){
+                                        print("Imagem: " + model.imagem[index]);
+                                        print("Preco: " + model.preco[index]);
+                                        print("Descricao: " + model.descricao[index]);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(1),
+                                        child: Container(
+                                          //color: Colors.indigo,
+                                          height: MediaQuery.of(context).size.width/3 - 3,
+                                          width: MediaQuery.of(context).size.width/3 - 3,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        model.imagem[index]
+                                                    ),
+                                                    fit: BoxFit.cover
+                                                )
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )
+                          )
+                      )
+                          )
+                        ],
+                      ),
+                      ))
                     ]
               ),
-            ],
-          ),
 
           drawer: CustomDrawer(),
           );
