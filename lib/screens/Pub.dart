@@ -314,9 +314,6 @@ class _Pub extends State<Pub> {
                                     ),
                                   )
                               ),
-
-
-
                           ],
                         ),
                       ),

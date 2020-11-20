@@ -1,7 +1,8 @@
-
+// TELA AMANDA
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/feed/feed_image.dart';
 import 'package:projeto_muh_compmov/utils/default_scaffold.dart';
 import 'package:projeto_muh_compmov/feed/feed.dart';
@@ -9,65 +10,141 @@ import 'package:projeto_muh_compmov/feed/ifeed.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-void main() => runApp(_Publications());
-
-// Test main
-class _Publications extends StatelessWidget {
-
+class Publications  extends StatefulWidget {
+  final String _img;
+  final String desc;
+  final String preco;
+  final String nome;
+  final String data;
+  final String img_perfil;
   @override
+  _Publications createState() => _Publications(this._img, this.desc,this.preco,this.nome,this.data,this.img_perfil);
+
+  Publications(this._img, this.desc,this.preco,this.nome,this.data,this.img_perfil);
+} // class Publications
+final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+class _Publications extends State<Publications> {
+  final String _img;
+  final String desc;
+  final String preco;
+  final String nome;
+  final String data;
+  final String img_perfil;
+  _Publications(this._img, this.desc,this.preco,this.nome,this.data,this.img_perfil);
   Widget build(BuildContext context) {
-    return ScopedModel<UserModel>(
-        model: UserModel(),
-        child: MaterialApp(
-          title: 'Muh',
-          theme: ThemeData(
-              primarySwatch: Colors.blue,
-              primaryColor: Color.fromARGB(255, 0, 0, 0)
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+
+        iconTheme: new IconThemeData(color: Colors.black),
+
+        title: Image.asset(
+          "assets/vakinha.png",
+          alignment: Alignment.center,
+          scale: 3.5,
+        ),
+
+        actions: [
+          RaisedButton(
+            // color: Colors.white,
+            //padding: EdgeInsets.only(0.2),
+            child: Icon(
+              Icons.chat,
+              color: Colors.black,
+            ),
+            color: Colors.white,
+            // color: Colors.black12,
+            onPressed: () {
+              // vai para as mensagens...
+            },
           ),
-          home: DefaultScaffold(bodyWidget: PublicationsScreen(), backgroundColor: Colors.grey[100],),
-          debugShowCheckedModeBanner: false,
-        )
-    );
-  }
-
-}
-
-class PublicationsScreen extends StatefulWidget {
-
-  @override
-  _PublicationsScreenState createState() => _PublicationsScreenState();
-
-}
-
-class _PublicationsScreenState extends State<PublicationsScreen> {
-
-  List<IFeed> _feed = [];
-  @override
-  void initState() {
-    super.initState();
-    _feed.add(Feed(
-        text: "Uma dúzia de ovos R\$5,00",
-        userInfo: {"image" : "https://plx-api.plox.com.br/files/body/old/o-rei-3.jpg", "name" : "Bruno Mezenga"}
-    ));
-    _feed.add(FeedImage(
-        text: "Mais um dia, mais um queijo! R\$8,00 kg",
-        userInfo: {"image" : "https://blogs.canalrural.com.br/coisasdocampo/wp-content/uploads/sites/11/2015/09/VACA-1.jpg", "name" : "João Carlos"},
-        imageUrl: "https://www.proteste.org.br/-/media/proteste/images/home/alimentacao/queijo%20minas/pim_queijo-minas_02.png?rev=1717f860-017d-4a2d-887b-ddc8f1d6a40f"
-    ));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultScaffold(
-      bodyWidget: ListView.builder(
-        itemCount: _feed.length,
-        itemBuilder: (context, index) => _feed[index].render(),
+        ],
       ),
-      backgroundColor: Colors.grey[100],
-    );
-  }
 
-}
+      body: ScopedModelDescendant<UserModel>(
+        builder: (context, child, model) {
+          if (model.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Container(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.only(top: 5, bottom: 0, left: 5, right: 5),
+                        child:
+                        Text(data,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),)
+                        ,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5, bottom: 0, left: 5, right: 5),
+                      child:
+                        Text(nome,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                        ),
+                      ),
+
+
+                    Padding(
+                      padding: EdgeInsets.zero,
+                      child: Container(
+                          alignment: Alignment.center,
+                        child: Align(
+                            child: FadeInImage.assetNetwork(
+                          placeholder: 'assets/loading.gif',
+                          image: _img,
+                          fadeInDuration: const Duration(seconds: 1),
+                          fit: BoxFit.fitWidth,
+                        )
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5, bottom: 0, left: 5, right: 5),
+                      child: Text(desc,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 0, left: 5, right: 5),
+                      child: Text('Produto por: ' + preco,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black,
+                            decoration: TextDecoration.underline),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+      drawer: CustomDrawer(),
+    );
+  } // Widget build
+} //_Publications
 
 
 
