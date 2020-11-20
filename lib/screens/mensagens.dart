@@ -40,10 +40,10 @@ class _MensagensState extends State<Mensagens> {
       _salvarMensagem(_idUsuarioLogado, _idUsuarioDestinatario, mensagem);
 
       //Salvar mensagem para o destinatário
-      _salvarMensagem(_idUsuarioDestinatario, _idUsuarioLogado, mensagem)
+      _salvarMensagem(_idUsuarioDestinatario, _idUsuarioLogado, mensagem);
 
       //Salvar conversa
-      _salvarConversa(mensagem)
+      _salvarConversa(mensagem);
     }
   }
 
@@ -203,7 +203,7 @@ class _MensagensState extends State<Mensagens> {
             }
         }
       }
-    )
+    );
 
 
 

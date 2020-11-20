@@ -126,14 +126,14 @@ class _CustomFormState extends State<CustomForm> {
               }
 
               return ListView.builder(
-                  itemCount: _listaConversas.length,
+                  itemCount: querySnapshot.documents.toList().length,
                   itemBuilder: (context, indice){
                     List<DocumentSnapshot> conversas = querySnapshot.documents.toList();
                     DocumentSnapshot item = conversas[indice];
 
                     String urlImagem  = item["caminhoFoto"];
                     String nome = item["nome"];
-                    String mensagem = item["mensagem"]
+                    String mensagem = item["mensagem"];
                     String idDestinatario = item["idDestinatario"];
 
                     Usuario usuario = Usuario();
