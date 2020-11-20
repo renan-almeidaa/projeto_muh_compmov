@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
-import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
+import 'package:projeto_muh_compmov/screens/Perfil.dart';
+//Tela amanda
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:intl/intl.dart';
 class Pub  extends StatefulWidget {
 
   @override
@@ -15,6 +17,28 @@ class Pub  extends StatefulWidget {
 class _Pub extends State<Pub> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _preco = TextEditingController();
+  static final DateTime now = DateTime.now();
+  static final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final String formatted = formatter.format(now);
+
+  imagemAdicionada(BuildContext context) {
+    return showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("Imagem adicionada!"),
+        actions: <Widget> [
+          MaterialButton(
+            elevation: 5.0,
+            child: Text('OK'),
+            onPressed: () {
+              yesorno = "Imagem já selecionada!";
+              Navigator.pop(context);
+            },
+          )
+        ],
+      );
+    });
+  } // popup
+
   popup(BuildContext context) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
@@ -24,13 +48,16 @@ class _Pub extends State<Pub> {
             elevation: 5.0,
             child: Text('OK'),
             onPressed: () {
-
+              Navigator.pop(context);
+              Navigator.of(context).pop(
+                  MaterialPageRoute(builder: (context) => Perfil())
+              );
             },
           )
         ],
       );
     });
-  }
+  } // popup
 
   popupDeuErrado(BuildContext context) {
     return showDialog(context: context, builder: (context) {
@@ -41,7 +68,8 @@ class _Pub extends State<Pub> {
             elevation: 5.0,
             child: Text('TENTAR NOVAMENTE'),
             onPressed: () {
-              Navigator.of(context).push(
+              Navigator.pop(context);
+              Navigator.of(context).pop(
                   MaterialPageRoute(builder: (context) => Pub())
               );
             },
@@ -56,6 +84,7 @@ class _Pub extends State<Pub> {
   String _mensagemErro = "";
 
   File _image;
+  String yesorno = "Sem imagem selecionada!";
 
   pickImageFromGallery(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
@@ -147,7 +176,7 @@ class _Pub extends State<Pub> {
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top: 0, bottom: 0),
+                        padding: EdgeInsets.only(top: 5, bottom: 0),
                         child: Text("Nova publicação",
                           style: TextStyle(
                               fontSize: 35,
@@ -178,12 +207,26 @@ class _Pub extends State<Pub> {
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.all(0),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(yesorno,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black45,
+                                      decoration: TextDecoration.none),
+                                ),
+                              ),
+
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:0,left:70),
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.start,
                                   children: [
 
 
@@ -191,14 +234,16 @@ class _Pub extends State<Pub> {
                                       onPressed: () {
                                         pickImageFromGallery(
                                             ImageSource.gallery);
+                                        imagemAdicionada(context);
                                       },
+
                                       icon: Icon(
                                         Icons.add_photo_alternate,
                                         color: Colors.black,
 
                                       ),
                                       label: Text(
-                                        "Adicionar uma foto...",
+                                        "Adicionar uma foto",
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -208,25 +253,15 @@ class _Pub extends State<Pub> {
                                       color: Colors.white70,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.elliptical(300,300)),
+                                            Radius.elliptical(600,600)),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text("Descrição:",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ),
+
+
                             Padding(
                               padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                               child: Align(
@@ -239,6 +274,7 @@ class _Pub extends State<Pub> {
                                       minLines: 6,
                                       maxLines: 6,
                                       decoration: InputDecoration(
+                                        hintText: "Descrição",
                                         filled: true,
                                         fillColor: Colors.white,
                                         // fillColor: Color(0xFFF4F5F6),
@@ -247,6 +283,7 @@ class _Pub extends State<Pub> {
                                           borderSide: BorderSide(),
                                         ),
                                       ),
+
                                     ),
                                   )
                               ),
@@ -291,8 +328,8 @@ class _Pub extends State<Pub> {
                               color: Colors.black,
                               onPressed: () {
                                 _validarCampos();
-                                popupDeuErrado(context);
-                                if (_mensagemErro != "")
+
+                                if (_mensagemErro != "") {
                                   _scaffoldKey.currentState.showSnackBar(
                                     SnackBar(
                                       content: Text(
@@ -304,18 +341,20 @@ class _Pub extends State<Pub> {
                                       duration: Duration(seconds: 2),
                                     ),
                                   );
-                                else {
+                                  popupDeuErrado(context);
+                                }else {
 
-                                 /* Map<String,dynamic> produtos = {
-                                    'name': _nomedogrupo.text,
-                                    'qtd_produtos': _qtdProdutos.text,
-                                    'ramo_escolhido': _productionSel,
-                                    'image': ""
+                                   Map<String,dynamic> publication = {
+                                    'image': "",
+                                   'descrição': _descriptionController.text,
+                                   'preço': _preco.text,
+                                     'date': formatted,
+
                                   };
-*/                                  popup(context);
+                                  popup(context);
 
-                                 // model.pegaNomedeumaFazenda();
-                                 // model.criaProduto(produtos, _image, this._idFazenda);
+                                  model.newPublication(publication, _image);
+                                  model.generalPublication(publication, _image);
 
                                 }
                               },
@@ -333,8 +372,11 @@ class _Pub extends State<Pub> {
               );
             }
           },
-        )
+        ),
+        drawer: CustomDrawer(),
     );
   }
 
 }
+
+
