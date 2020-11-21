@@ -47,12 +47,12 @@ class Feed implements IFeed {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(this._userInfo["userImage"])
+                  image: NetworkImage((this._userInfo["userImage"] == null ? "" : this._userInfo["userImage"]))
                 )
               ),
             ),
             title: Text(this._userInfo["userName"]),
-            subtitle: Text("Enviado em ${this._pubInfo["pubDate"]}"),
+            subtitle: Text("Enviado em ${DateFormat("dd/MM/yyyy").format(DateTime.parse(this._pubInfo["pubDate"]))}"),
           ),
           renderContent(),
           renderBottom(),
@@ -103,6 +103,10 @@ class Feed implements IFeed {
         )
       ],
     );
+  }
+
+  bool _getLikeState() {
+
   }
 
 }
