@@ -4,8 +4,10 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:projeto_muh_compmov/feed/ifeed.dart';
 import 'package:projeto_muh_compmov/models/Usuario.dart';
+import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/mensagens.dart';
 import 'package:projeto_muh_compmov/utils/stateful_flat_button.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Feed implements IFeed {
 
@@ -93,20 +95,24 @@ class Feed implements IFeed {
           iconInactive: Icons.favorite_border,
           fillColorActive: Colors.red,
         ),
-        FlatButton(
-          onPressed: () {
-            Usuario u = new Usuario();
-            u.nome=_userInfo["userName"];
-            u.idUsuario=_userInfo["userId"];
-            u.urlImagem=_userInfo["userImage"] == null ? "" : _userInfo['userImage'];
-            Navigator.of(this._context).push(
-              MaterialPageRoute(builder: (context) => Mensagens(u)),
+        ScopedModelDescendant<UserModel>(
+          builder: (context, child, model) {
+            return FlatButton(
+              onPressed: () {
+                Usuario u = new Usuario();
+                u.nome=_userInfo["userName"];
+                u.idUsuario=_userInfo["userId"];
+                u.urlImagem=_userInfo["userImage"] == null ? "" : _userInfo['userImage'];
+                Navigator.of(this._context).push(
+                  MaterialPageRoute(builder: (context) => Mensagens(u, model: model)),
+                );
+              },
+              child: Icon(
+                Icons.comment,
+                color: Colors.black,
+              ),
             );
           },
-          child: Icon(
-            Icons.comment,
-            color: Colors.black,
-          ),
         ),
         FlatButton(
             onPressed: null,
