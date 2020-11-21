@@ -9,9 +9,9 @@ import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class Mensagens extends StatefulWidget {
-  final UserModel model;
+  UserModel model;
   Usuario usuarioDestino;
-  Mensagens(this.usuarioDestino, this.model);
+  Mensagens(this.usuarioDestino, {this.model});
 
   @override
   _MensagensState createState() => _MensagensState();
@@ -250,6 +250,7 @@ class _MensagensState extends State<Mensagens> {
       body: ScopedModelDescendant<UserModel>(
 
           builder: (context, child, model) {
+
             if (model.isLoading) {
               return Center(
                 child: CircularProgressIndicator(),

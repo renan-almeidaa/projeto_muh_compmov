@@ -13,7 +13,7 @@ class RouteGenerator {
     switch(settings.name){
       case "/mensagens":
         return MaterialPageRoute(
-            builder: (_) => Mensagens(args, model)
+            builder: (_) => Mensagens(args)
         );
     }
   }
