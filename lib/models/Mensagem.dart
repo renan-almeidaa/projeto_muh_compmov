@@ -2,6 +2,7 @@ class Mensagem {
 
   String _idUsuario;
   String _mensagem;
+  String _data;
 
   Mensagem();
 
@@ -9,11 +10,18 @@ class Mensagem {
 
     Map<String, dynamic> map = {
       "idUsuario" : this.idUsuario,
-      "mensagem" : this.mensagem,
+      "mensagem"  : this.mensagem,
+      "data"      : this.data,
     };
 
     return map;
 
+  }
+
+  String get data => _data;
+
+  set data(String value) {
+    _data = value;
   }
 
   String get mensagem => _mensagem;

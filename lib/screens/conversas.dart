@@ -142,35 +142,35 @@ class _CustomFormState extends State<CustomForm> {
                     usuario.idUsuario = idDestinatario;
 
                     return ListTile(
-                      onTap: (){
-                        Navigator.pushNamed(
-                            context,
-                            "/mensagens",
-                            arguments: usuario
-                        );
-                      },
-                      contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                      leading: CircleAvatar(
-                        maxRadius: 30,
-                        backgroundColor: Colors.grey,
-                        backgroundImage: urlImagem!=null
-                            ? NetworkImage( urlImagem )
-                            : null,
-                      ),
-                      title: Text(
-                        nome,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16
+                        onTap: (){
+                          Navigator.pushNamed(
+                              context,
+                              "/mensagens",
+                              arguments: usuario
+                          );
+                        },
+                        contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        leading: CircleAvatar(
+                          maxRadius: 30,
+                          backgroundColor: Colors.grey,
+                          backgroundImage: urlImagem!=null
+                              ? NetworkImage( urlImagem )
+                              : null,
                         ),
-                      ),
-                      subtitle: Text(
-                        mensagem,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14
+                        title: Text(
+                          nome,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        ),
+                        subtitle: Text(
+                            mensagem,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14
+                            )
                         )
-                      )
 
                     );
 

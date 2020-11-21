@@ -178,35 +178,7 @@ class _Perfil extends State<Perfil> {
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding:EdgeInsets.only(left: 8),
-                                          child: Container(
-                                            width: MediaQuery.of(context).size.width/3 - 16,
-                                            height: 25,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            child: RaisedButton(
-                                              onPressed: (){
 
-
-                                                Navigator.of(context).push(
-
-                                                    MaterialPageRoute(builder: (context) => Mensagens(new Usuario())),
-                                                );
-                                              },
-                                              color: Colors.white,
-                                              child: Text(
-                                                "Mensagem",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ],
