@@ -40,7 +40,7 @@ class _IconSectionState extends State<IconSection> {
                   onTap: (){
 
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Perfil())
+                        MaterialPageRoute(builder: (context) => Perfil(model.background_image))
                     );
                   },
                   high: false,

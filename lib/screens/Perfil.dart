@@ -1,16 +1,56 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/feed/feed.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/Feed.dart';
 import 'package:projeto_muh_compmov/screens/Foto.dart';
+import 'package:projeto_muh_compmov/screens/Publications.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'Destaque.dart';
 
+class Perfil  extends StatefulWidget {
 
-class Perfil extends StatelessWidget {
+  final String _background_imagem;
+
+  Perfil(this._background_imagem);
+
+  @override
+  _Perfil createState() => _Perfil(_background_imagem);
+
+}
+
+
+class _Perfil extends State<Perfil> {
+
+  final String _background_imagem;
+
+  _Perfil(this._background_imagem);
+
+  String nova_imagem;
+
+  File _image;
+  String _filename = '';
+
+
+  String getFileName(File file) {
+    return basename(file.path);
+  }
+
+  pickImageFromGallery(ImageSource source) async {
+    final ImagePicker picker = ImagePicker();
+    final PickedFile image = await picker.getImage(source: source);
+
+    setState(() {
+      _image = File(image.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(
@@ -63,7 +103,7 @@ class Perfil extends StatelessWidget {
                                     Center(
                                         child: CircleAvatar(
                                           radius: 50,
-                                          backgroundColor: Colors.black, //coloca a imagem da pessoa, coloca background imagem
+                                          backgroundImage: NetworkImage(model.background_image), //coloca a imagem da pessoa, coloca background imagem
                                         )
                                     ),
                                     Center(
@@ -74,7 +114,16 @@ class Perfil extends StatelessWidget {
                                               alignment: Alignment.bottomRight,
                                               child: FloatingActionButton(
                                                 child: Icon(Icons.add),
-                                                onPressed: (){},
+                                                onPressed: () async {
+                                                  await pickImageFromGallery(ImageSource.gallery);
+                                                  setState(() {
+                                                    _filename = getFileName(_image);
+                                                  });
+                                                    model.AddImagemUser(_image);
+                                                    setState(() {
+                                                      model.background_image = model.background_image;
+                                                    });
+                                                },
                                               ),
 
                                             )
@@ -207,6 +256,21 @@ class Perfil extends StatelessWidget {
                                         print("Imagem: " + model.imagem[index]);
                                         print("Preco: " + model.preco[index]);
                                         print("Descricao: " + model.descricao[index]);
+                                        //data
+                                        //nome da pessoa
+                                        //imagem_perfil
+                                        /*
+                                        final String _img;
+                                        final String desc;
+                                        final String preco;
+                                        final String nome;
+                                        final String data;
+                                        final String img_perfil;
+                                        */
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder: (context) => Publications(model.imagem[index], model.descricao[index], model.preco[index], model.nome_identificacao, model.datas[index], model.background_image))
+                                        );
+
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(1),
@@ -243,4 +307,7 @@ class Perfil extends StatelessWidget {
       }
     );
     }
-  }
+
+
+
+}

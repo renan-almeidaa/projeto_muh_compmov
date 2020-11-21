@@ -50,7 +50,7 @@ class _Pub extends State<Pub> {
             onPressed: () {
               Navigator.pop(context);
               Navigator.of(context).pop(
-                  MaterialPageRoute(builder: (context) => Perfil())
+                  //MaterialPageRoute(builder: (context) => Perfil())
               );
             },
           )

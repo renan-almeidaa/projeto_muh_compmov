@@ -24,7 +24,9 @@ class UserModel extends Model{
   List preco = [];
   List descricao = [];
   List imagem = [];
+  List datas = [];
 
+  String background_image;
 
   bool condicional = false;
 
@@ -96,7 +98,7 @@ class UserModel extends Model{
     await Firestore.instance.collection('users').document(firebaseUser.uid).setData(userData);
   }
 
-  Future<String> _updateImage(File image) async {
+  Future<String> updateImage(File image) async {
     if (image != null) {
       StorageUploadTask task = FirebaseStorage.instance.ref().child(
           DateTime
@@ -130,6 +132,7 @@ class UserModel extends Model{
     List descricao = [];
     List imagem =  [];
     List preco = [];
+    List datas = [];
 
     QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').getDocuments();
     print("Cheguei aqui");
@@ -142,8 +145,10 @@ class UserModel extends Model{
       print("descricao: " + dados["descrição"]);
       print("Imagem: " + dados["image"]);
       print("Preco: " + dados["preço"]);
+      datas.add(dados["formatted"]);
     }
 
+    print("Tamanho das listas: " + datas.length.toString());
     print("Tamanho das listas: " + preco.length.toString());
     print("Tamanho das listas: " + descricao.length.toString());
     print("Tamanho das listas: " + imagem.length.toString());
@@ -151,16 +156,13 @@ class UserModel extends Model{
     this.descricao = descricao;
     this.preco = preco;
     this.imagem = imagem;
+    this.datas = datas;
 
-
+    print("Tamanho das listas: " + this.datas.length.toString());
     print("Tamanho das listas: " + this.preco.length.toString());
     print("Tamanho das listas: " + this.descricao.length.toString());
     print("Tamanho das listas: " + this.imagem.length.toString());
 
-  }
-  Future<List<DocumentSnapshot>> getFotosPerfil() async {
-    QuerySnapshot query = await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').getDocuments();
-    return query.documents;
   }
 
   Future<Null> createProdutoData(Map<String,dynamic> farmData, String idFarm) async {
@@ -170,13 +172,13 @@ class UserModel extends Model{
   }
 
   Future<Null> createFarmData(Map<String,dynamic> farmData, File image) async {
-    String url = await _updateImage(image);
+    String url = await updateImage(image);
     farmData.update('image', (value) => value = url);
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document().setData(farmData);
   }
   
   Future<Null> newPublication(Map<String,dynamic> pub, File image) async {
-    String imagem = await _updateImage(image);
+    String imagem = await updateImage(image);
     pub.update('image', (value) => value = imagem);
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection('publicacao').document().setData(pub);
   } // AMANDA
@@ -192,7 +194,7 @@ class UserModel extends Model{
   } // AMANDA
 
   Future<Null> generalPublication(Map<String,dynamic> pub, File image) async {
-    String imagem = await _updateImage(image);
+    String imagem = await updateImage(image);
     pub.update('image', (value) => value = imagem);
     await Firestore.instance.collection('publications').document().setData(pub);
   }
@@ -208,12 +210,52 @@ class UserModel extends Model{
   }
 
   Future<String> criaProduto(Map<String, dynamic> produtos, File image, String id_fazenda) async {
-    String url = await _updateImage(image);
+    String url = await updateImage(image);
     produtos.update('image', (value) => value = url);
     var item = await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(id_fazenda).collection('products').document();
     item.setData(produtos);
     return item.documentID;
   }
+
+  Future<Null> AddImagemUser(File image) async{
+
+    String id = await Firestore.instance.collection('users').document(firebaseUser.uid).documentID;
+    String url = await updateImage(image);
+    String data = "";
+    String email = "";
+    String genero = "";
+    String imagem = "";
+    String lastname = "";
+    String nome = "";
+
+    QuerySnapshot query = await Firestore.instance.collection('users').getDocuments();
+    for(DocumentSnapshot item in query.documents) {
+      var dados = item.data;
+      if(id == item.documentID) {
+        data = dados["bithday"];
+        email = dados["email"];
+        genero = dados["genre"];
+        imagem = url;
+        lastname = dados["lastname"];
+        nome = dados["name"];
+      }
+    }
+
+    Map<String,dynamic> perfil_novo = {
+      'name': nome,
+      'bithday': data,
+      'email': email,
+      'genero': genero,
+      'image': imagem,
+      'lastname' : lastname,
+    };
+
+    await Firestore.instance.collection('users').document(firebaseUser.uid).setData(perfil_novo);
+
+    this.background_image = imagem;
+
+  }
+
 
   Future<List> pegaNomedeumaFazenda() async{
     nome.clear();
@@ -273,7 +315,7 @@ class UserModel extends Model{
     //print("teste de nome: " + teste);
     String sobrenome = "";
     String email1 = "";
-
+    String imagem;
     for(DocumentSnapshot item in query.documents){
       var dado = item.data;
       if(id == item.documentID){
@@ -283,13 +325,14 @@ class UserModel extends Model{
          sobrenome = dado["lastname"];
          print("nome12121212121: " + dado["lastname"]);
          email1 = dado["email"];
-
+         imagem = dado["image"];
       }
 
     }
     print("askujhsjkas");
     this.email = email1;
-    nome_identificacao = nome + " " + sobrenome;
+    this.nome_identificacao = nome + " " + sobrenome;
+    this.background_image = imagem;
   }
 
   Future<Null> pegaNomedosProdutos(String idFazenda) async{ // retorna os itens da fazenda da tela do gu
@@ -318,7 +361,7 @@ class UserModel extends Model{
   }
 
   Future<Null> createItemData(Map<String,dynamic> itemData, File image, String farmId, String IdProduto) async {
-    String url = await _updateImage(image);
+    String url = await updateImage(image);
     itemData.update('image', (value) => value = url);
     //await Firestore.instance.collection('users').document(firebaseUser.uid).collection('farms').document(farmId).collection('items').document().setData(itemData)
     //await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(farmId).collection('items').document().setData(itemData);
