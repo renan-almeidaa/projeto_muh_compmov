@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
-import 'package:projeto_muh_compmov/feed/feed_image.dart';
 import 'package:projeto_muh_compmov/utils/default_scaffold.dart';
 import 'package:projeto_muh_compmov/feed/feed.dart';
 import 'package:projeto_muh_compmov/feed/ifeed.dart';
