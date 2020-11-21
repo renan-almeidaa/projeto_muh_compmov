@@ -94,16 +94,19 @@ class Feed implements IFeed {
           fillColorActive: Colors.red,
         ),
         FlatButton(
-            onPressed: () {
-              Usuario u ;
-              u.nome=_userInfo['userName'];
-              u.idUsuario=_userInfo['userId'];
-              u.urlImagem=_userInfo['userImage'] == null ? "" : _userInfo['userImage'];
-              Navigator.of(this._context).push(
-                MaterialPageRoute(builder: (context) => Mensagens(u)),
-              );
-            },
-            child: Icon(Icons.comment),
+          onPressed: () {
+            Usuario u = new Usuario();
+            u.nome=_userInfo["userName"];
+            u.idUsuario=_userInfo["userId"];
+            u.urlImagem=_userInfo["userImage"] == null ? "" : _userInfo['userImage'];
+            Navigator.of(this._context).push(
+              MaterialPageRoute(builder: (context) => Mensagens(u)),
+            );
+          },
+          child: Icon(
+            Icons.comment,
+            color: Colors.black,
+          ),
         ),
         FlatButton(
             onPressed: null,
