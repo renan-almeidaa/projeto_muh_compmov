@@ -33,15 +33,17 @@ class Feed extends StatefulWidget {
 class _FeedState extends State<Feed> implements IFeed {
 
   bool _favState = false; // Informação se o usuário favoritou a publicação
-  bool _likeState = false; // Informação se o usuário curtiu a publicação
+  Map<String, dynamic> _likeInfo = {
+    "state" : false,
+  }; // Informação se o usuário curtiu a publicação
 
   @override
   void initState() {
     super.initState();
     UserModel model = ScopedModel.of(context);
-    this._getLikeState(model, widget._pubInfo).then((value) {
+    this._getLikeInfo(model, widget._pubInfo).then((value) {
       setState(() {
-        this._likeState = value;
+        this._likeInfo = value;
       });
     });
   }
@@ -108,36 +110,39 @@ class _FeedState extends State<Feed> implements IFeed {
             FlatButton(
               child: Icon(
                 Icons.thumb_up,
-                color: (this._likeState ? Colors.blue : Colors.grey),
+                color: (this._likeInfo["state"] ? Colors.blue : Colors.grey),
               ),
               onPressed: () {
-                if(!this._likeState) {
-                  DocumentReference dr = Firestore.instance.collection("users").document(widget._userInfo["userId"])
+                if(!this._likeInfo["state"]) {
+                  DocumentReference pubDr = Firestore.instance.collection("users").document(widget._userInfo["userId"])
                       .collection("publicacao").document(widget._pubInfo["pubId"]);
 
-                  Firestore.instance.collection("users").document(model.firebaseUser.uid)
-                      .collection("likes").document().setData({"publicacao" : dr});
+                  DocumentReference stateDr = Firestore.instance.collection("users").document(model.firebaseUser.uid)
+                      .collection("likes").document();
+
+                  stateDr.setData({"publicacao" : pubDr});
 
                   // Incrementa like...
 
                   setState(() {
-                    this._likeState = true;
+                    this._likeInfo["state"] = true;
+                    this._likeInfo["stateDocRef"] = stateDr;
                   });
                 } else {
-                  this._getLikeDocument(model, widget._pubInfo).then((value) {
-                    try {
-                      value.delete();
+                  try {
+                    DocumentReference stateDr = this._likeInfo["stateDocRef"];
+                    stateDr.delete();
 
-                      // Decrementa like...
+                    // Decrementa like...
 
-                      setState(() {
-                        this._likeState = false;
-                      });
-                    } catch(error) {
-                      print("Não foi possível remover o like...");
-                      print("\n" + error.toString());
-                    }
-                  });
+                    setState(() {
+                      this._likeInfo["state"] = false;
+                      this._likeInfo["stateDocRef"] = null;
+                    });
+                  } catch(error) {
+                    print("Não foi possível remover o like...");
+                    print("\n" + error.toString());
+                  }
                 }
               },
             ),
@@ -187,34 +192,22 @@ class _FeedState extends State<Feed> implements IFeed {
     );
   }
 
-  Future<bool> _getLikeState(UserModel model, Map<String, String> pubInfo) async {
-    bool liked = false;
+  Future<Map<String, dynamic>> _getLikeInfo(UserModel model, Map<String, String> pubInfo) async {
+    Map<String, dynamic> likeInfo = {
+      "state" : false,
+    };
 
     QuerySnapshot q = await Firestore.instance.collection("users")
         .document(model.firebaseUser.uid).collection("likes").getDocuments();
     for(DocumentSnapshot ds in q.documents) {
       DocumentReference dr = ds.data["publicacao"];
       if(dr.documentID == pubInfo["pubId"]) {
-        liked = true;
+        likeInfo["state"] = true;
+        likeInfo["stateDocRef"] = ds.reference;
       }
     }
 
-    return liked;
-  }
-
-  Future<DocumentReference> _getLikeDocument(UserModel model, Map<String, String> pubInfo) async {
-
-    QuerySnapshot q = await Firestore.instance.collection("users")
-        .document(model.firebaseUser.uid).collection("likes").getDocuments();
-    for(DocumentSnapshot ds in q.documents) {
-      DocumentReference dr = ds.data["publicacao"];
-      if(dr.documentID == pubInfo["pubId"]) {
-        print("Path: " + ds.reference.path);
-        return ds.reference;
-      }
-    }
-
-    return null;
+    return likeInfo;
   }
 
 }
