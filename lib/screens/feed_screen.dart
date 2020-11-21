@@ -94,9 +94,9 @@ class _FeedScreenState extends State<FeedScreen> {
         };
 
         if(pubInfo["pubImage"].isNotEmpty) {
-          pub.add(FeedImage(userInfo: userInfo, pubInfo: pubInfo));
+          pub.add(FeedImage(context: context, userInfo: userInfo, pubInfo: pubInfo));
         } else {
-          pub.add(Feed(userInfo: userInfo, pubInfo: pubInfo));
+          pub.add(Feed(context: context, userInfo: userInfo, pubInfo: pubInfo));
         }
 
       }

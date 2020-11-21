@@ -4,8 +4,8 @@ import 'package:projeto_muh_compmov/feed/feed.dart';
 
 class FeedImage extends Feed {
 
-  FeedImage({@required userInfo, @required pubInfo})
-      : super(userInfo: userInfo, pubInfo: pubInfo);
+  FeedImage({@required context, @required userInfo, @required pubInfo})
+      : super(context: context, userInfo: userInfo, pubInfo: pubInfo);
 
   @override
   Widget renderContent() {
