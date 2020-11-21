@@ -39,21 +39,7 @@ class ItemRegister extends StatelessWidget {
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
         title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-        actions: [
-          RaisedButton(
-            // color: Colors.white,
-            //padding: EdgeInsets.only(0.2),
-            child:
-            Icon(Icons.chat,
-              color: Colors.black,
-            ),
-            // color: Color(0xFF121416),
-            color: Colors.white,
-            onPressed: () {
-              // vai para as mensagens...
-            },
-          ),
-        ],
+
       ),
       body: CustomForm(this._farmId, this._productId, this._nomes),
       drawer: CustomDrawer(),

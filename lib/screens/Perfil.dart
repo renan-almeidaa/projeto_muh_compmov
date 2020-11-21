@@ -60,23 +60,12 @@ class _Perfil extends State<Perfil> {
             centerTitle: true,
             backgroundColor: Colors.white,
             iconTheme: new IconThemeData(color: Colors.black),
-            //  leading: Image.asset("imagens/cow.png"),
             title: Image.asset(
               "assets/vakinha.png",
               alignment: Alignment.center,
               scale: 3.5,
             ),
-            actions: [
-              RaisedButton(
-                // color: Colors.white,
-                //padding: EdgeInsets.only(0.2),
-                child: Icon(Icons.message),
-                color: Colors.white,
-                onPressed: () {
-                  // vai para as mensagens...
-                },
-              ),
-            ],
+            
           ),
 
           body:

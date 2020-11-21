@@ -48,21 +48,6 @@ class _Publications extends State<Publications> {
           scale: 3.5,
         ),
 
-        actions: [
-          RaisedButton(
-            // color: Colors.white,
-            //padding: EdgeInsets.only(0.2),
-            child: Icon(
-              Icons.chat,
-              color: Colors.black,
-            ),
-            color: Colors.white,
-            // color: Colors.black12,
-            onPressed: () {
-              // vai para as mensagens...
-            },
-          ),
-        ],
       ),
 
       body: ScopedModelDescendant<UserModel>(

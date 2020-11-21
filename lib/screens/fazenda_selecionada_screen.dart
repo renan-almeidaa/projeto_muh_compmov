@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/item_registration_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -130,32 +131,8 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
             alignment: Alignment.center,
             scale: 3.5,
           ),
-          leading: RaisedButton(
-            color: Colors.white,
-            // color: Colors.black12,
-            child: Icon(
-              Icons.dehaze,
-              color: Colors.black,
-            ),
-            onPressed: () {
 
-            },
-          ),
-          actions: [
-            RaisedButton(
-              // color: Colors.white,
-              //padding: EdgeInsets.only(0.2),
-              child: Icon(
-                Icons.chat,
-                color: Colors.black,
-              ),
-              color: Colors.white,
-              // color: Colors.black12,
-              onPressed: () {
-                // vai para as mensagens...
-              },
-            ),
-          ],
+
         ),
         body: ScopedModelDescendant<UserModel>(
           builder: (context, child, model) {
@@ -239,20 +216,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
 //                                ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
-//                                  child: TextField(
-//                                    controller: _adressController,
-//                                    style: TextStyle(
-//                                      fontSize: 17,
-//                                    ),
-//                                    keyboardType: TextInputType.streetAddress,
-//                                    decoration: InputDecoration(
-//                                        contentPadding:
-//                                        EdgeInsets.fromLTRB(15, 15, 15, 15),
-//                                        hintText: "Digite o endereço",
-//                                        border: OutlineInputBorder(
-//                                            borderRadius:
-//                                            BorderRadius.circular(15))),
-//                                  ),
+
                                 ),
                               ],
                             ),
@@ -267,32 +231,7 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  child: new Center(
-//                                    child: DropdownButton(
-//                                      icon: Icon(Icons.arrow_downward),
-//                                      iconSize: 20,
-//                                      elevation: 20,
-//                                      style: TextStyle(color: Colors.black),
-//
-//                                      hint: Text(
-//                                          'Escolha o ramo...'), // Not necessary for Option 1
-//                                      value: _productionSel,
-//                                      onChanged: (newValue) {
-//                                        setState(() {
-//                                          _productionSel = newValue;
-//                                        });
-//                                      },
-//                                      items: _productions.map((location) {
-//                                        return DropdownMenuItem(
-//                                          child: new Text(location),
-//                                          value: location,
-//                                        );
-//                                      }).toList(),
-//                                    ),
-                                  ),
-                                ),
+
                               ],
                             ),
 
@@ -355,36 +294,6 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
                               ),
                             ),
 
-//                            Row(
-//                              crossAxisAlignment: CrossAxisAlignment.start,
-//                              children: <Widget>[
-//                                RaisedButton.icon(
-//                                  onPressed: () {
-//                                    Navigator.of(context).push(
-//                                        MaterialPageRoute(builder: (context) => ItemRegister(_idFazenda,"E0zreBV00nFJNS4VQQUi" ,_nomefazenda))
-//                                    );
-//                                  },
-//                                  icon: Icon(
-//                                    Icons.add_circle_outline,
-//                                    color: Colors.black,
-//
-//                                  ),
-//                                  label: Text(
-//                                    "Adicionar item...",
-//                                    style: TextStyle(
-//                                      fontWeight: FontWeight.w600,
-//                                    ),
-//                                  ),
-//                                  elevation: 0,
-//                                  // color: Colors.white,
-//                                  color: Colors.white70,
-//                                  shape: RoundedRectangleBorder(
-//                                    borderRadius: BorderRadius.all(
-//                                        Radius.elliptical(300,300)),
-//                                  ),
-//                                ),
-//                              ],
-//                            ),
                           ],
                         ),
                       ),
@@ -439,7 +348,8 @@ class _FazendaSelecionadaScreenState extends State<FazendaSelecionadaScreen> {
               );
             }
           },
-        )
+        ),
+        drawer: CustomDrawer(),
     );
   }
 }

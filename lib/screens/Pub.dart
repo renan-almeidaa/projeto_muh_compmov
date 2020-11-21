@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/Perfil.dart';
+import 'package:projeto_muh_compmov/screens/feed_screen.dart';
 //Tela amanda
 import 'package:scoped_model/scoped_model.dart';
 import 'package:intl/intl.dart';
@@ -49,9 +50,7 @@ class _Pub extends State<Pub> {
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);
-              Navigator.of(context).pop(
-                  //MaterialPageRoute(builder: (context) => Perfil())
-              );
+
             },
           )
         ],

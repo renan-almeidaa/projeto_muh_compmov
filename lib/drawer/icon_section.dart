@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_muh_compmov/drawer/IconTile.dart';
+import 'package:projeto_muh_compmov/feed/feed.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/Perfil.dart';
 import 'package:projeto_muh_compmov/screens/cadastro_fazenda_screen.dart';
 import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
+import 'package:projeto_muh_compmov/screens/feed_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class IconSection extends StatefulWidget {
@@ -31,6 +33,9 @@ class _IconSectionState extends State<IconSection> {
                   label: "Inicio",
                   iconData: Icons.home,
                   onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => FeedScreen())
+                    );
                   },
                   high: false,
                 ),

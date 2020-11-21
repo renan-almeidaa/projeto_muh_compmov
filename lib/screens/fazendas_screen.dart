@@ -175,19 +175,7 @@ class _FazendasScreen extends State<FazendasScreen> {
           alignment: Alignment.center,
           scale: 3.5,
         ),
-        actions: [
-          RaisedButton(
-            // color: Colors.white,
-            //padding: EdgeInsets.only(0.2),
-            child: Icon(Icons.message),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Conversas())
-              );
-            },
-          ),
-        ],
+
       ),
       body: ScopedModelDescendant<UserModel>(
           builder: (context, child, model) {

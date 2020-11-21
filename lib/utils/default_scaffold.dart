@@ -24,18 +24,7 @@ class DefaultScaffold extends StatelessWidget {
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.black),
         title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-        actions: [
-          RaisedButton(
-            child:
-            Icon(Icons.chat,
-              color: Colors.black,
-            ),
-            color: Colors.white,
-            onPressed: () {
-              // vai para as mensagens...
-            },
-          ),
-        ],
+
       ),
 
       // O certo é o ScopedModelDescendant estar dentro do CustomDrawer, assim não sendo mais necessário passar

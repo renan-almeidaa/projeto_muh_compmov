@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class StatefulFlatButton extends StatefulWidget {
-
+  int contador;
   bool _state;
   IconData _icon;
   Color _fillColor;

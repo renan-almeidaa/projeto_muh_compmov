@@ -24,17 +24,7 @@ class HelpScreen extends StatelessWidget {
           alignment: Alignment.center,
           scale: 3.5,
         ),
-        actions: [
-          RaisedButton(
-            // color: Colors.white,
-            //padding: EdgeInsets.only(0.2),
-            child: Icon(Icons.message),
-            color: Colors.white,
-            onPressed: () {
-              // vai para as mensagens...
-            },
-          ),
-        ],
+
       ),
       body: CustomForm(_nome),
       drawer: CustomDrawer(),

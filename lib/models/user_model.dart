@@ -165,9 +165,11 @@ class UserModel extends Model{
 
   }
 
+  Future<Null> getLikes(Map<String,dynamic> farmData, String idFarm) async {
+
+  }
+
   Future<Null> createProdutoData(Map<String,dynamic> farmData, String idFarm) async {
-    // String url = await _updateImage(image);
-    //farmData.update('image', (value) => value = url);
     await Firestore.instance.collection('users').document(firebaseUser.uid).collection("farms").document(idFarm).collection("products").document().setData(farmData);
   }
 
