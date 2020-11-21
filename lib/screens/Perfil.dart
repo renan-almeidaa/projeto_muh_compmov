@@ -6,10 +6,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/feed/feed.dart';
+import 'package:projeto_muh_compmov/models/Mensagem.dart';
+import 'package:projeto_muh_compmov/models/Usuario.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/Feed.dart';
 import 'package:projeto_muh_compmov/screens/Foto.dart';
 import 'package:projeto_muh_compmov/screens/Publications.dart';
+import 'package:projeto_muh_compmov/screens/mensagens.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'Destaque.dart';
@@ -168,6 +171,35 @@ class _Perfil extends State<Perfil> {
                                               color: Colors.white,
                                               child: Text(
                                                 "Editar perfil",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:EdgeInsets.only(left: 8),
+                                          child: Container(
+                                            width: MediaQuery.of(context).size.width/3 - 16,
+                                            height: 25,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            child: RaisedButton(
+                                              onPressed: (){
+
+
+                                                Navigator.of(context).push(
+
+                                                    MaterialPageRoute(builder: (context) => Mensagens(new Usuario())),
+                                                );
+                                              },
+                                              color: Colors.white,
+                                              child: Text(
+                                                "Mensagem",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),

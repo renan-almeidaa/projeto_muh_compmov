@@ -33,7 +33,7 @@ class CustomHeader extends StatelessWidget {
                         image: DecorationImage(
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                                "https://static.tuasaude.com/media/article/gl/lo/beneficios-do-abacate_13382_l.jpg")//AQUI GU VC SÓ PRECISA POR O LINK DA IMAGEM AQUI QUE VOCE UPOR PARA O FIREBASE
+                                model.background_image)//AQUI GU VC SÓ PRECISA POR O LINK DA IMAGEM AQUI QUE VOCE UPOR PARA O FIREBASE
                         )
                     ),
                   ),
