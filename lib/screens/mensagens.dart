@@ -36,7 +36,6 @@ class _MensagensState extends State<Mensagens> {
   _enviarMensagem(){
     String textoMensagem = _controllerMensagem.text;
     if(textoMensagem.isNotEmpty) {
-
       Mensagem mensagem = Mensagem();
       mensagem.idUsuario = _idUsuarioLogado;
       mensagem.mensagem = textoMensagem;
@@ -58,9 +57,9 @@ class _MensagensState extends State<Mensagens> {
     Conversa cRemetente = Conversa();
     cRemetente.idRemetente = _idUsuarioLogado;
     cRemetente.idDestinatario = _idUsuarioDestinatario;
-    cRemetente.nome = widget.usuarioDestino.nome;
+    cRemetente.nome = _nomeUsuarioLogado;
     cRemetente.mensagem = msg.mensagem;
-    cRemetente.caminhoFoto =  widget.usuarioDestino.urlImagem;
+    cRemetente.caminhoFoto =  _fotoUsuarioLogado;
     cRemetente.salvar();
     //Salvar conversa remetente
     Conversa cDestinatario = Conversa();
@@ -86,7 +85,7 @@ class _MensagensState extends State<Mensagens> {
 
     _idUsuarioLogado = usuarioLogado.uid;
     _nomeUsuarioLogado = widget.model.nome_identificacao;
-    //_fotoUsuarioLogado = widget.model
+    _fotoUsuarioLogado = widget.model.background_image;
     _idUsuarioDestinatario = widget.usuarioDestino.idUsuario;
 
     _adicionarListenerMensagens();
