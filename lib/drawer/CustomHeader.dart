@@ -33,7 +33,7 @@ class CustomHeader extends StatelessWidget {
                         image: DecorationImage(
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                                model.background_image)//AQUI GU VC SÓ PRECISA POR O LINK DA IMAGEM AQUI QUE VOCE UPOR PARA O FIREBASE
+                                (model.background_image == null ? "" : model.background_image))//AQUI GU VC SÓ PRECISA POR O LINK DA IMAGEM AQUI QUE VOCE UPOR PARA O FIREBASE
                         )
                     ),
                   ),

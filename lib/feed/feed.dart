@@ -98,7 +98,7 @@ class Feed implements IFeed {
               Usuario u ;
               u.nome=_userInfo['userName'];
               u.idUsuario=_userInfo['userId'];
-              u.urlImagem=_userInfo['userImage'];
+              u.urlImagem=_userInfo['userImage'] == null ? "" : _userInfo['userImage'];
               Navigator.of(this._context).push(
                 MaterialPageRoute(builder: (context) => Mensagens(u)),
               );
