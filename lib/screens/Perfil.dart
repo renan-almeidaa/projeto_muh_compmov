@@ -95,7 +95,7 @@ class _Perfil extends State<Perfil> {
                                     Center(
                                         child: CircleAvatar(
                                           radius: 50,
-                                          backgroundImage: NetworkImage(model.background_image), //coloca a imagem da pessoa, coloca background imagem
+                                          backgroundImage: (model.background_image == null ? AssetImage("assets/person-icon.png") : NetworkImage(model.background_image)), //coloca a imagem da pessoa, coloca background imagem
                                         )
                                     ),
                                     Center(

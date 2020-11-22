@@ -177,24 +177,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 16.0,),
-                      Align(
-                        alignment: Alignment.center,
-                        child: FlatButton(
-                          onPressed: (){
-                           Navigator.of(context).push(
-                             MaterialPageRoute(builder: (context) => GridVisitanteScreen()),
-                            );
-                          },
-                          child: Text(
-                            'Entrar como visitante',
-                            style: TextStyle(
-                                fontSize: 16.0
-                            ),
-                            textAlign: TextAlign.left,),
-                          padding:EdgeInsets.zero,
-
-                        ),
-                      ),
+                      // Align(
+                      //   alignment: Alignment.center,
+                      //   child: FlatButton(
+                      //     onPressed: (){
+                      //      Navigator.of(context).push(
+                      //        MaterialPageRoute(builder: (context) => GridVisitanteScreen()),
+                      //       );
+                      //     },
+                      //     child: Text(
+                      //       'Entrar como visitante',
+                      //       style: TextStyle(
+                      //           fontSize: 16.0
+                      //       ),
+                      //       textAlign: TextAlign.left,),
+                      //     padding:EdgeInsets.zero,
+                      //
+                      //   ),
+                      // ),
                     ],
                   ),
                 );
