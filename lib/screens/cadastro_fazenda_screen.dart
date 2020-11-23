@@ -10,6 +10,8 @@ import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/fazendas_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import 'conversas.dart';
+
 // void main() => runApp(MaterialApp(
 //   home: ItemRegister('teste'),
 //   ),
@@ -29,8 +31,23 @@ class CadastroFzd extends StatelessWidget {
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
-        title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-
+        title: Image.asset(
+          "assets/vakinha.png",
+          alignment: Alignment.center,
+          scale: 3.5,
+        ),
+        actions: [
+          RaisedButton(
+            // color: Colors.white,
+            //padding: EdgeInsets.only(0.2),
+            child: Icon(Icons.message),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Conversas()));
+            },
+          ),
+        ],
       ),
       body: CustomForm(_nome),
       drawer: CustomDrawer(),
@@ -40,7 +57,6 @@ class CadastroFzd extends StatelessWidget {
 
 // -- FORM
 class CustomForm extends StatefulWidget {
-
   List _nome;
 
   CustomForm(List nome) {
@@ -51,7 +67,6 @@ class CustomForm extends StatefulWidget {
 }
 
 class _CustomFormState extends State<CustomForm> {
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _adressController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -62,22 +77,23 @@ class _CustomFormState extends State<CustomForm> {
   String _filename = '';
 
   popup(BuildContext context, String nome) {
-    return showDialog(context: context, builder: (context) {
-      return AlertDialog(
-        title: Text("Fazenda selecionada: " + nome),
-        actions: <Widget> [
-          MaterialButton(
-            elevation: 5.0,
-            child: Text('ok'),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => FazendasScreen())
-              );
-            },
-          )
-        ],
-      );
-    });
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Fazenda selecionada: " + nome),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text('ok'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FazendasScreen()));
+                },
+              )
+            ],
+          );
+        });
   }
 
   String getFileName(File file) {
@@ -96,14 +112,12 @@ class _CustomFormState extends State<CustomForm> {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(
-
       builder: (context, child, model) {
-        if(model.isLoading) {
+        if (model.isLoading) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        }
-        else {
+        } else {
           this.widget._nome.addAll(model.nome);
           return Form(
             key: _formKey,
@@ -116,7 +130,8 @@ class _CustomFormState extends State<CustomForm> {
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Align(
                         alignment: Alignment.topCenter,
-                        child: Text("Cadastrar Fazenda",
+                        child: Text(
+                          "Cadastrar Fazenda",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -130,7 +145,8 @@ class _CustomFormState extends State<CustomForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Nome:",
+                          Text(
+                            "Nome:",
                             style: TextStyle(
                               fontSize: 20,
                               fontStyle: FontStyle.normal,
@@ -145,7 +161,8 @@ class _CustomFormState extends State<CustomForm> {
                                     child: TextFormField(
                                       controller: _nameController,
                                       validator: (field) {
-                                        if (field.length == 0) return "Dê um nome para sua fazenda!";
+                                        if (field.length == 0)
+                                          return "Dê um nome para sua fazenda!";
                                         return null;
                                       },
                                       decoration: InputDecoration(
@@ -153,7 +170,8 @@ class _CustomFormState extends State<CustomForm> {
                                         fillColor: Colors.white,
                                         // fillColor: Color(0xFFF4F5F6),
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.elliptical(10, 10)),
                                           borderSide: BorderSide(
                                             width: 1,
                                           ),
@@ -164,9 +182,7 @@ class _CustomFormState extends State<CustomForm> {
                                         ),
                                       ),
                                     ),
-                                  )
-                              )
-                          ),
+                                  ))),
                         ],
                       ),
                     ),
@@ -175,7 +191,8 @@ class _CustomFormState extends State<CustomForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Endereço:",
+                          Text(
+                            "Endereço:",
                             style: TextStyle(
                               fontSize: 20,
                               fontStyle: FontStyle.normal,
@@ -190,7 +207,8 @@ class _CustomFormState extends State<CustomForm> {
                                     child: TextFormField(
                                       controller: _adressController,
                                       validator: (field) {
-                                        if (field.length == 0) return "Informe o endereço!";
+                                        if (field.length == 0)
+                                          return "Informe o endereço!";
                                         return null;
                                       },
                                       decoration: InputDecoration(
@@ -198,7 +216,8 @@ class _CustomFormState extends State<CustomForm> {
                                         fillColor: Colors.white,
                                         // fillColor: Color(0xFFF4F5F6),
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.elliptical(10, 10)),
                                           borderSide: BorderSide(
                                             width: 1,
                                           ),
@@ -209,9 +228,7 @@ class _CustomFormState extends State<CustomForm> {
                                         ),
                                       ),
                                     ),
-                                  )
-                              )
-                          ),
+                                  ))),
                         ],
                       ),
                     ),
@@ -220,7 +237,8 @@ class _CustomFormState extends State<CustomForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Produção primária:",
+                          Text(
+                            "Produção primária:",
                             style: TextStyle(
                               fontSize: 20,
                               fontStyle: FontStyle.normal,
@@ -235,7 +253,8 @@ class _CustomFormState extends State<CustomForm> {
                                     child: TextFormField(
                                       controller: _productionController,
                                       validator: (field) {
-                                        if (field.length == 0) return "Informe a produção primária!";
+                                        if (field.length == 0)
+                                          return "Informe a produção primária!";
                                         return null;
                                       },
                                       decoration: InputDecoration(
@@ -243,7 +262,8 @@ class _CustomFormState extends State<CustomForm> {
                                         fillColor: Colors.white,
                                         // fillColor: Color(0xFFF4F5F6),
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.elliptical(10, 10)),
                                           borderSide: BorderSide(
                                             width: 1,
                                           ),
@@ -254,9 +274,7 @@ class _CustomFormState extends State<CustomForm> {
                                         ),
                                       ),
                                     ),
-                                  )
-                              )
-                          ),
+                                  ))),
                         ],
                       ),
                     ),
@@ -267,7 +285,8 @@ class _CustomFormState extends State<CustomForm> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Imagem:",
+                            Text(
+                              "Imagem:",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -296,10 +315,12 @@ class _CustomFormState extends State<CustomForm> {
 
                                 Scaffold.of(context).showSnackBar(snackBar);
                               },
-                              icon: Icon(Icons.save_alt,
+                              icon: Icon(
+                                Icons.save_alt,
                                 size: 20,
                               ),
-                              label: Text("Carregar",
+                              label: Text(
+                                "Carregar",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -308,7 +329,8 @@ class _CustomFormState extends State<CustomForm> {
                               color: Colors.white,
                               // color: Color(0xFFF4F5F6),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.elliptical(10, 10)),
                                 side: BorderSide(),
                               ),
                             ),
@@ -316,12 +338,12 @@ class _CustomFormState extends State<CustomForm> {
                         ),
                       ),
                     ),
-
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text("Descrição:",
+                        child: Text(
+                          "Descrição:",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -345,13 +367,13 @@ class _CustomFormState extends State<CustomForm> {
                                 fillColor: Colors.white,
                                 // fillColor: Color(0xFFF4F5F6),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.elliptical(10, 10)),
                                   borderSide: BorderSide(),
                                 ),
                               ),
                             ),
-                          )
-                      ),
+                          )),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
@@ -363,18 +385,20 @@ class _CustomFormState extends State<CustomForm> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                           elevation: 0,
-                          icon: Icon(Icons.add,
+                          icon: Icon(
+                            Icons.add,
                             color: Colors.white,
                           ),
-                          label: Text('Cadastrar Fazenda',
+                          label: Text(
+                            'Cadastrar Fazenda',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                             ),
                           ),
                           onPressed: () {
-                            if(_formKey.currentState.validate()) {
-                              Map<String,dynamic> farmData = {
+                            if (_formKey.currentState.validate()) {
+                              Map<String, dynamic> farmData = {
                                 'name': _nameController.text,
                                 'address': _adressController.text,
                                 'productionPrimary': _productionController.text,
@@ -384,7 +408,7 @@ class _CustomFormState extends State<CustomForm> {
 
                               debugPrint(farmData.toString());
                               model.createFarmData(farmData, _image);
-                             // popup(context, _nameController.text);
+                              // popup(context, _nameController.text);
 
                               final snackBar = SnackBar(
                                 content: Text('Fazenda cadastrada!'),

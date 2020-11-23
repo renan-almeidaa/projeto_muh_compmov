@@ -10,6 +10,8 @@ import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:projeto_muh_compmov/screens/login_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import 'conversas.dart';
+
 class HelpScreen extends StatelessWidget {
   List _nome = new List();
   @override
@@ -24,7 +26,18 @@ class HelpScreen extends StatelessWidget {
           alignment: Alignment.center,
           scale: 3.5,
         ),
-
+        actions: [
+          RaisedButton(
+            // color: Colors.white,
+            //padding: EdgeInsets.only(0.2),
+            child: Icon(Icons.message),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Conversas()));
+            },
+          ),
+        ],
       ),
       body: CustomForm(_nome),
       drawer: CustomDrawer(),
@@ -48,8 +61,7 @@ class _CustomFormState extends State<CustomForm> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(
-                "Problema reportado com sucesso!"),
+            title: Text("Problema reportado com sucesso!"),
             content: Text(
                 "Obrigado, iremos analisar e tentar consertar isso o mais rapido possivel."),
             actions: <Widget>[
@@ -70,18 +82,15 @@ class _CustomFormState extends State<CustomForm> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(
-                "ERRO"),
-            content: Text(
-                "Faça o login para reportar o problema"),
+            title: Text("ERRO"),
+            content: Text("Faça o login para reportar o problema"),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5.0,
                 child: Text('ok'),
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen())
-                  );
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
               )
             ],
@@ -112,8 +121,10 @@ class _CustomFormState extends State<CustomForm> {
                     text: 'Perguntas frequentes',
                   ),
                   GFAccordion(
-                    title: 'Como faço para criar um novo produto na minha fazenda?',
-                    content: 'Selecione o menu no canto esquerdo superior da tela e vá em "Minha fazenda". Selecione a fazenda a qual você deseja adicionar um item e vá em "adicionar novo produto"',
+                    title:
+                        'Como faço para criar um novo produto na minha fazenda?',
+                    content:
+                        'Selecione o menu no canto esquerdo superior da tela e vá em "Minha fazenda". Selecione a fazenda a qual você deseja adicionar um item e vá em "adicionar novo produto"',
                     collapsedIcon: Icon(Icons.add),
                     expandedIcon: Icon(Icons.minimize),
                     textStyle: TextStyle(fontSize: 20),
@@ -196,19 +207,23 @@ class _CustomFormState extends State<CustomForm> {
                                             padding: EdgeInsets.all(8.0),
                                             child: RaisedButton(
                                               onPressed: () {
-                                                if(model.isLoggedIn()){
+                                                if (model.isLoggedIn()) {
                                                   if (_formKey.currentState
                                                       .validate()) {
-                                                    Map<String,dynamic> description = {
-                                                      'description': _descriptionProblemController.text
+                                                    Map<String, dynamic>
+                                                        description = {
+                                                      'description':
+                                                          _descriptionProblemController
+                                                              .text
                                                     };
-                                                    model.reportProblem(description);
+                                                    model.reportProblem(
+                                                        description);
                                                     Navigator.of(context).pop();
-                                                    popupReportedProblem(context);
+                                                    popupReportedProblem(
+                                                        context);
                                                   }
-                                                }
-                                                else{
-                                                    popupNaoEstaLogado(context);
+                                                } else {
+                                                  popupNaoEstaLogado(context);
                                                 }
                                               },
                                               child: Text("Enviar"),

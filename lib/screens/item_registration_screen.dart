@@ -9,6 +9,8 @@ import 'package:projeto_muh_compmov/drawer/Drawer.dart';
 import 'package:projeto_muh_compmov/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import 'conversas.dart';
+
 // void main() => runApp(MaterialApp(
 //   home: ItemRegister('teste'),
 //   ),
@@ -38,8 +40,23 @@ class ItemRegister extends StatelessWidget {
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.black),
         //  leading: Image.asset("imagens/cow.png"),
-        title: Image.asset("assets/vakinha.png", alignment: Alignment.center, scale: 3.5,),
-
+        title: Image.asset(
+          "assets/vakinha.png",
+          alignment: Alignment.center,
+          scale: 3.5,
+        ),
+        actions: [
+          RaisedButton(
+            // color: Colors.white,
+            //padding: EdgeInsets.only(0.2),
+            child: Icon(Icons.message),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Conversas()));
+            },
+          ),
+        ],
       ),
       body: CustomForm(this._farmId, this._productId, this._nomes),
       drawer: CustomDrawer(),
@@ -67,7 +84,7 @@ class _CustomFormState extends State<CustomForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  Map<String,String> _dropdownMenus = Map<String,String>();
+  Map<String, String> _dropdownMenus = Map<String, String>();
 
   File _image;
   String _filename = '';
@@ -89,12 +106,11 @@ class _CustomFormState extends State<CustomForm> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(
       builder: (context, child, model) {
-        if(model.isLoading) {
+        if (model.isLoading) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        }
-        else {
+        } else {
           this.widget._nomes.addAll(model.nome);
           return Form(
             key: _formKey,
@@ -107,7 +123,8 @@ class _CustomFormState extends State<CustomForm> {
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Align(
                         alignment: Alignment.topCenter,
-                        child: Text("Cadastrar Item",
+                        child: Text(
+                          "Cadastrar Item",
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w700,
@@ -120,7 +137,8 @@ class _CustomFormState extends State<CustomForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Nome:",
+                          Text(
+                            "Nome:",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -134,7 +152,8 @@ class _CustomFormState extends State<CustomForm> {
                                     child: TextFormField(
                                       controller: _nameController,
                                       validator: (field) {
-                                        if (field.length < 3) return "O nome precisa ter mais de 3 letras!";
+                                        if (field.length < 3)
+                                          return "O nome precisa ter mais de 3 letras!";
                                         return null;
                                       },
                                       decoration: InputDecoration(
@@ -142,7 +161,8 @@ class _CustomFormState extends State<CustomForm> {
                                         fillColor: Colors.white,
                                         // fillColor: Color(0xFFF4F5F6),
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.elliptical(10, 10)),
                                           borderSide: BorderSide(
                                             width: 1,
                                           ),
@@ -153,9 +173,7 @@ class _CustomFormState extends State<CustomForm> {
                                         ),
                                       ),
                                     ),
-                                  )
-                              )
-                          ),
+                                  ))),
                         ],
                       ),
                     ),
@@ -166,7 +184,8 @@ class _CustomFormState extends State<CustomForm> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Imagem:",
+                            Text(
+                              "Imagem:",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -176,7 +195,8 @@ class _CustomFormState extends State<CustomForm> {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                                 child: Container(
-                                  child: Text(_filename,
+                                  child: Text(
+                                    _filename,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15,
@@ -200,10 +220,12 @@ class _CustomFormState extends State<CustomForm> {
 
                                 Scaffold.of(context).showSnackBar(snackBar);
                               },
-                              icon: Icon(Icons.save_alt,
+                              icon: Icon(
+                                Icons.save_alt,
                                 size: 20,
                               ),
-                              label: Text("Carregar",
+                              label: Text(
+                                "Carregar",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -212,7 +234,8 @@ class _CustomFormState extends State<CustomForm> {
                               color: Colors.white,
                               // color: Color(0xFFF4F5F6),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.elliptical(10, 10)),
                                 side: BorderSide(),
                               ),
                             ),
@@ -224,28 +247,38 @@ class _CustomFormState extends State<CustomForm> {
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: DropDownItem(['Produto', 'Animal',], 'type', _dropdownMenus),
+                        child: DropDownItem([
+                          'Produto',
+                          'Animal',
+                        ], 'type', _dropdownMenus),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: DropDownItem(['Público', 'Privado',], 'visibility', _dropdownMenus),
+                        child: DropDownItem([
+                          'Público',
+                          'Privado',
+                        ], 'visibility', _dropdownMenus),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: DropDownItem(['À venda', 'Exibição',], 'status', _dropdownMenus),
+                        child: DropDownItem([
+                          'À venda',
+                          'Exibição',
+                        ], 'status', _dropdownMenus),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text("Descrição:",
+                        child: Text(
+                          "Descrição:",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -269,13 +302,13 @@ class _CustomFormState extends State<CustomForm> {
                                 fillColor: Colors.white,
                                 // fillColor: Color(0xFFF4F5F6),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.elliptical(10, 10)),
                                   borderSide: BorderSide(),
                                 ),
                               ),
                             ),
-                          )
-                      ),
+                          )),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
@@ -287,27 +320,30 @@ class _CustomFormState extends State<CustomForm> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                           elevation: 0,
-                          icon: Icon(Icons.add,
+                          icon: Icon(
+                            Icons.add,
                             color: Colors.white,
                           ),
-                          label: Text('Cadastrar Item',
+                          label: Text(
+                            'Cadastrar Item',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                             ),
                           ),
                           onPressed: () async {
-                            if(_formKey.currentState.validate()) {
-                              Map<String,dynamic> itemData = {
-                                'name':_nameController.text,
-                                'image':'',
-                                'type':_dropdownMenus['type'],
-                                'visibility':_dropdownMenus['visibility'],
-                                'status':_dropdownMenus['status'],
-                                'description':_descController.text,
+                            if (_formKey.currentState.validate()) {
+                              Map<String, dynamic> itemData = {
+                                'name': _nameController.text,
+                                'image': '',
+                                'type': _dropdownMenus['type'],
+                                'visibility': _dropdownMenus['visibility'],
+                                'status': _dropdownMenus['status'],
+                                'description': _descController.text,
                               };
                               debugPrint(itemData.toString());
-                              model.createItemData(itemData, _image, widget._farmId, widget._productId);
+                              model.createItemData(itemData, _image,
+                                  widget._farmId, widget._productId);
 
                               final snackBar = SnackBar(
                                 content: Text('Item cadastrado!'),
@@ -315,9 +351,9 @@ class _CustomFormState extends State<CustomForm> {
                               );
 
                               Scaffold.of(context).showSnackBar(snackBar);
-                              await new Future.delayed(const Duration(seconds: 1, milliseconds: 500));
+                              await new Future.delayed(const Duration(
+                                  seconds: 1, milliseconds: 500));
                               Navigator.of(context).pop();
-
                             } else {
                               final snackBar = SnackBar(
                                 content: Text('Dados incompletos'),
@@ -341,14 +377,14 @@ class _CustomFormState extends State<CustomForm> {
   }
 }
 
-
 // -- DROPDOWN
 class DropDownItem extends StatefulWidget {
   List<String> _items;
   String _mapKey;
-  Map<String,String> _dropdownMap;
+  Map<String, String> _dropdownMap;
 
-  DropDownItem(List<String> items, String mapKey, Map<String,String> dropdownMap) {
+  DropDownItem(
+      List<String> items, String mapKey, Map<String, String> dropdownMap) {
     this._items = items;
     this._mapKey = mapKey;
     this._dropdownMap = dropdownMap;
@@ -358,7 +394,6 @@ class DropDownItem extends StatefulWidget {
 
   @override
   _DropDownItemState createState() => _DropDownItemState(_items[0]);
-
 }
 
 class _DropDownItemState extends State<DropDownItem> {
@@ -371,44 +406,45 @@ class _DropDownItemState extends State<DropDownItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(10),
-        height: 42,
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          // color: Color(0xFFF4F5F6),
-          shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-              ),
-              borderRadius: BorderRadius.all(Radius.elliptical(10, 10))
-          ),
-        ),
-        child: SizedBox(
-          width: 350,
-          child: DropdownButtonFormField<String>(
-            decoration: InputDecoration.collapsed(hintText: null),
-            value: _dropdownValue,
-            iconSize: 24,
-            elevation: 0,
-            onChanged: (String newValue) {
-              setState((){
-                _dropdownValue = newValue;
-                widget._dropdownMap.update(widget._mapKey, (value) => value = newValue);
-              });
-            },
-            items: widget._items.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
+      padding: EdgeInsets.all(10),
+      height: 42,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        // color: Color(0xFFF4F5F6),
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1,
+            ),
+            borderRadius: BorderRadius.all(Radius.elliptical(10, 10))),
+      ),
+      child: SizedBox(
+        width: 350,
+        child: DropdownButtonFormField<String>(
+          decoration: InputDecoration.collapsed(hintText: null),
+          value: _dropdownValue,
+          iconSize: 24,
+          elevation: 0,
+          onChanged: (String newValue) {
+            setState(() {
+              _dropdownValue = newValue;
+              widget._dropdownMap
+                  .update(widget._mapKey, (value) => value = newValue);
+            });
+          },
+          items: widget._items.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                 ),
-              );
-            }).toList(),
-          ),
+              ),
+            );
+          }).toList(),
         ),
+      ),
     );
   }
 }
