@@ -109,6 +109,7 @@ class _MensagensState extends State<Mensagens> {
   @override
   void initState() {
     super.initState();
+    widget.model = ScopedModel.of(context);
     _recuperarDadosUsuario();
   }
 
