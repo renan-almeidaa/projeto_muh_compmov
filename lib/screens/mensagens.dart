@@ -18,7 +18,6 @@ class Mensagens extends StatefulWidget {
 }
 
 class _MensagensState extends State<Mensagens> {
-
   String _idUsuarioLogado;
   String _idUsuarioDestinatario;
   String _nomeUsuarioLogado;
@@ -26,16 +25,14 @@ class _MensagensState extends State<Mensagens> {
 
   Firestore db = Firestore.instance;
 
-
-
   TextEditingController _controllerMensagem = TextEditingController();
 
   final _controller = StreamController<QuerySnapshot>.broadcast();
   ScrollController _scrollController = ScrollController();
 
-  _enviarMensagem(){
+  _enviarMensagem() {
     String textoMensagem = _controllerMensagem.text;
-    if(textoMensagem.isNotEmpty) {
+    if (textoMensagem.isNotEmpty) {
       Mensagem mensagem = Mensagem();
       mensagem.idUsuario = _idUsuarioLogado;
       mensagem.mensagem = textoMensagem;
@@ -52,14 +49,14 @@ class _MensagensState extends State<Mensagens> {
     }
   }
 
-  _salvarConversa(Mensagem msg){
+  _salvarConversa(Mensagem msg) {
     //Salvar conversa remetente
     Conversa cRemetente = Conversa();
     cRemetente.idRemetente = _idUsuarioLogado;
     cRemetente.idDestinatario = _idUsuarioDestinatario;
     cRemetente.nome = _nomeUsuarioLogado;
     cRemetente.mensagem = msg.mensagem;
-    cRemetente.caminhoFoto =  _fotoUsuarioLogado;
+    cRemetente.caminhoFoto = _fotoUsuarioLogado;
     cRemetente.salvar();
     //Salvar conversa remetente
     Conversa cDestinatario = Conversa();
@@ -71,14 +68,16 @@ class _MensagensState extends State<Mensagens> {
     cDestinatario.salvar();
   }
 
-  _salvarMensagem(String idRemetente, String idDestinatario, Mensagem msg) async {
-
-    await db.collection("mensagens")
+  _salvarMensagem(
+      String idRemetente, String idDestinatario, Mensagem msg) async {
+    await db
+        .collection("mensagens")
         .document(idRemetente)
         .collection(idDestinatario)
         .add(msg.toMap());
     _controllerMensagem.clear();
   }
+
   _recuperarDadosUsuario() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     FirebaseUser usuarioLogado = await auth.currentUser();
@@ -89,24 +88,22 @@ class _MensagensState extends State<Mensagens> {
     _idUsuarioDestinatario = widget.usuarioDestino.idUsuario;
 
     _adicionarListenerMensagens();
-
   }
 
-  Stream<QuerySnapshot> _adicionarListenerMensagens(){
-
-    final stream = db.collection("mensagens")
+  Stream<QuerySnapshot> _adicionarListenerMensagens() {
+    final stream = db
+        .collection("mensagens")
         .document(_idUsuarioLogado)
         .collection(_idUsuarioDestinatario)
         .orderBy("data", descending: false)
         .snapshots();
 
-    stream.listen((dados){
-      _controller.add( dados );
-      Timer(Duration(seconds: 1), (){
+    stream.listen((dados) {
+      _controller.add(dados);
+      Timer(Duration(seconds: 1), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
     });
-
   }
 
   @override
@@ -115,41 +112,37 @@ class _MensagensState extends State<Mensagens> {
     _recuperarDadosUsuario();
   }
 
-
   @override
   Widget build(BuildContext context) {
     var caixaMensagem = Container(
       padding: EdgeInsets.all(8),
-      child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(right: 8),
-                child: TextField(
-                  controller: _controllerMensagem,
-                  autofocus: true,
-                  keyboardType: TextInputType.text,
-                  style: TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(32, 8, 32, 8),
-                    hintText: "Digite uma mensagem...",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32)
-                    ),
-                  ),
-                ),
+      child: Row(children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: TextField(
+              controller: _controllerMensagem,
+              autofocus: true,
+              keyboardType: TextInputType.text,
+              style: TextStyle(fontSize: 20),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(32, 8, 32, 8),
+                hintText: "Digite uma mensagem...",
+                filled: true,
+                fillColor: Colors.white,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(32)),
               ),
             ),
-            FloatingActionButton(
-              backgroundColor: Color(0xff000000),
-              child: Icon(Icons.send, color: Colors.white),
-              mini: true,
-              onPressed: _enviarMensagem,
-            )
-          ]
-      ),
+          ),
+        ),
+        FloatingActionButton(
+          backgroundColor: Color(0xff000000),
+          child: Icon(Icons.send, color: Colors.white),
+          mini: true,
+          onPressed: _enviarMensagem,
+        )
+      ]),
     );
 
     var stream = StreamBuilder(
@@ -173,13 +166,9 @@ class _MensagensState extends State<Mensagens> {
               QuerySnapshot querySnapshot = snapshot.data;
 
               if (snapshot.hasError) {
-                return Expanded(
-                    child: Text("Ero ao carregar os dados")
-                );
+                return Expanded(child: Text("Ero ao carregar os dados"));
               } else if (snapshot.hasData == false) {
-                return Expanded(
-                    child: Text("Comece uma conversa :)")
-                );
+                return Expanded(child: Text("Comece uma conversa :)"));
               } else {
                 return Expanded(
                     child: ListView.builder(
@@ -187,15 +176,16 @@ class _MensagensState extends State<Mensagens> {
                         itemCount: querySnapshot.documents.length,
                         itemBuilder: (context, indice) {
                           //recupera mensagem
-                          List<DocumentSnapshot> mensagens = querySnapshot
-                              .documents.toList();
+                          List<DocumentSnapshot> mensagens =
+                              querySnapshot.documents.toList();
                           DocumentSnapshot item = mensagens[indice];
 
                           //Define cores e alinhamentos
                           Alignment alinhamento = Alignment.centerRight;
                           Color cor = Color(0xff000000);
                           Color corFonte = Colors.white;
-                          if (_idUsuarioLogado != item["idUsuario"]) { //par
+                          if (_idUsuarioLogado != item["idUsuario"]) {
+                            //par
                             alinhamento = Alignment.centerLeft;
                             cor = Colors.white;
                             corFonte = Colors.black;
@@ -209,78 +199,53 @@ class _MensagensState extends State<Mensagens> {
                                     decoration: BoxDecoration(
                                         color: cor,
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(8))
-                                    ),
-                                    child: Text(
-                                        item["mensagem"],
+                                            Radius.circular(8))),
+                                    child: Text(item["mensagem"],
                                         style: TextStyle(
-                                            fontSize: 20,
-                                            color: corFonte
-                                        )
-                                    )
-                                )
-                            ),
+                                            fontSize: 20, color: corFonte)))),
                           );
-                        }
-                    )
-                );
+                        }));
               }
           }
-        }
-    );
-
+        });
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: CircleAvatar(
-                    maxRadius: 23,
-                    backgroundColor: Colors.grey,
-                    backgroundImage: widget.usuarioDestino.urlImagem != null
-                        ? NetworkImage(widget.usuarioDestino.urlImagem)
-                        : null),
-              ),
-              Text(widget.usuarioDestino.nome)
-            ]),
+        title: Row(children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: CircleAvatar(
+                maxRadius: 23,
+                backgroundColor: Colors.grey,
+                backgroundImage: widget.usuarioDestino.urlImagem != null &&
+                        widget.usuarioDestino.urlImagem.isNotEmpty
+                    ? NetworkImage(widget.usuarioDestino.urlImagem)
+                    : AssetImage("assets/person-icon.png")),
+          ),
+          Text(widget.usuarioDestino.nome)
+        ]),
       ),
-      body: ScopedModelDescendant<UserModel>(
-
-          builder: (context, child, model) {
-
-            if (model.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/fundoChat.png"),
-                          fit: BoxFit.cover
-                      )
-                  ),
-                  child: SafeArea(
-                      child: Container(
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                              children: <Widget>[
-                                stream,
-                                caixaMensagem,
-                              ]
-                          )
-                      )
-                  )
-              );
-            }
-          }
-      ),
+      body: ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+        if (model.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/fundoChat.png"),
+                      fit: BoxFit.cover)),
+              child: SafeArea(
+                  child: Container(
+                      padding: EdgeInsets.all(16),
+                      child: Column(children: <Widget>[
+                        stream,
+                        caixaMensagem,
+                      ]))));
+        }
+      }),
     );
   }
 }

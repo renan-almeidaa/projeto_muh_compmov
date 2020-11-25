@@ -26,7 +26,6 @@ class Conversas extends StatelessWidget {
 
 // -- FORM
 class CustomForm extends StatefulWidget {
-
   List _nome;
 
   CustomForm(List nome) {
@@ -37,7 +36,6 @@ class CustomForm extends StatefulWidget {
 }
 
 class _CustomFormState extends State<CustomForm> {
-
   List<Conversa> _listaConversas = List();
   final _controller = StreamController<QuerySnapshot>.broadcast();
   Firestore db = Firestore.instance;
@@ -51,33 +49,30 @@ class _CustomFormState extends State<CustomForm> {
     Conversa conversa = Conversa();
     conversa.nome = "Ana Clara";
     conversa.mensagem = "Olá tudo bem?";
-    conversa.caminhoFoto = "https://miro.medium.com/max/900/1*zycFEuGuh48dSDoUaOwnuA.jpeg";
+    conversa.caminhoFoto =
+        "https://miro.medium.com/max/900/1*zycFEuGuh48dSDoUaOwnuA.jpeg";
 
     _listaConversas.add(conversa);
-
   }
 
-  Stream<QuerySnapshot> _adicionarListenerConversas(){
-
-    final stream = db.collection("conversas")
-        .document( _idUsuarioLogado )
+  Stream<QuerySnapshot> _adicionarListenerConversas() {
+    final stream = db
+        .collection("conversas")
+        .document(_idUsuarioLogado)
         .collection("ultima_conversa")
         .snapshots();
 
-    stream.listen((dados){
-      _controller.add( dados );
+    stream.listen((dados) {
+      _controller.add(dados);
     });
-
   }
 
   _recuperarDadosUsuario() async {
-
     FirebaseAuth auth = FirebaseAuth.instance;
     FirebaseUser usuarioLogado = await auth.currentUser();
     _idUsuarioLogado = usuarioLogado.uid;
 
     _adicionarListenerConversas();
-
   }
 
   @override
@@ -88,11 +83,10 @@ class _CustomFormState extends State<CustomForm> {
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<QuerySnapshot>(
       stream: _controller.stream,
       // ignore: missing_return
-      builder: (context, snapshot){
+      builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.waiting:
@@ -109,29 +103,26 @@ class _CustomFormState extends State<CustomForm> {
           case ConnectionState.done:
             if (snapshot.hasError) {
               return Text("Erro ao carregar os dados!");
-            }else{
-
+            } else {
               QuerySnapshot querySnapshot = snapshot.data;
 
-              if( querySnapshot.documents.length == 0 ){
+              if (querySnapshot.documents.length == 0) {
                 return Center(
                   child: Text(
                     "Você não tem nenhuma mensagem ainda :( ",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 );
               }
 
               return ListView.builder(
                   itemCount: querySnapshot.documents.toList().length,
-                  itemBuilder: (context, indice){
-                    List<DocumentSnapshot> conversas = querySnapshot.documents.toList();
+                  itemBuilder: (context, indice) {
+                    List<DocumentSnapshot> conversas =
+                        querySnapshot.documents.toList();
                     DocumentSnapshot item = conversas[indice];
 
-                    String urlImagem  = item["caminhoFoto"];
+                    String urlImagem = item["caminhoFoto"];
                     String nome = item["nome"];
                     String mensagem = item["mensagem"];
                     String idDestinatario = item["idDestinatario"];
@@ -142,47 +133,31 @@ class _CustomFormState extends State<CustomForm> {
                     usuario.idUsuario = idDestinatario;
 
                     return ListTile(
-                        onTap: (){
-                          Navigator.pushNamed(
-                              context,
-                              "/mensagens",
-                              arguments: usuario
-                          );
+                        onTap: () {
+                          Navigator.pushNamed(context, "/mensagens",
+                              arguments: usuario);
                         },
                         contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                         leading: CircleAvatar(
                           maxRadius: 30,
                           backgroundColor: Colors.grey,
-                          backgroundImage: urlImagem!=null
-                              ? NetworkImage( urlImagem )
-                              : null,
+                          backgroundImage:
+                              urlImagem != null && urlImagem.isNotEmpty
+                                  ? NetworkImage(urlImagem)
+                                  : AssetImage("assets/person-icon.png"),
                         ),
                         title: Text(
                           nome,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                        subtitle: Text(
-                            mensagem,
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14
-                            )
-                        )
-
-                    );
-
-                  }
-              );
-
+                        subtitle: Text(mensagem,
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 14)));
+                  });
             }
         }
       },
     );
-
-
   }
-
 }
