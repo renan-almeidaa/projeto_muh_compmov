@@ -54,17 +54,17 @@ class _MensagensState extends State<Mensagens> {
     Conversa cRemetente = Conversa();
     cRemetente.idRemetente = _idUsuarioLogado;
     cRemetente.idDestinatario = _idUsuarioDestinatario;
-    cRemetente.nome = _nomeUsuarioLogado;
+    cRemetente.nome = widget.usuarioDestino.nome;
     cRemetente.mensagem = msg.mensagem;
-    cRemetente.caminhoFoto = _fotoUsuarioLogado;
+    cRemetente.caminhoFoto = widget.usuarioDestino.urlImagem;
     cRemetente.salvar();
-    //Salvar conversa remetente
+    //Salvar conversa destinatario
     Conversa cDestinatario = Conversa();
     cDestinatario.idRemetente = _idUsuarioDestinatario;
     cDestinatario.idDestinatario = _idUsuarioLogado;
-    cDestinatario.nome = widget.usuarioDestino.nome;
+    cDestinatario.nome = _nomeUsuarioLogado;
     cDestinatario.mensagem = msg.mensagem;
-    cDestinatario.caminhoFoto = widget.usuarioDestino.urlImagem;
+    cDestinatario.caminhoFoto = _fotoUsuarioLogado;
     cDestinatario.salvar();
   }
 
